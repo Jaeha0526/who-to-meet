@@ -56,6 +56,10 @@ Conversation Transcripts / Bios / LinkedIn text
 - Duplicate detection warns before adding someone who's already in the graph
 - Every recommendation shows WHY with visible reasoning chains and graph paths
 - Chat history persists across page refreshes
+- Chat conversations update the knowledge graph in real-time (when toggle is ON)
+- SQLite always synced with in-memory graph — no data loss
+- Cross-transcript person identity merging (same person = one node)
+- 10 pytest tests covering critical demo paths
 
 ## Architecture
 
@@ -186,7 +190,24 @@ With 20 participants, that's 190 pairwise comparisons. Running them once during 
 - **Kkanbu** — taste oracle that proxied user preferences during development
 - **Claude Code** — autonomous mediator between Ouroboros and Kkanbu
 
-Built in ~30 minutes of AI execution time across 2 iterations at the SF Ralphthon hackathon, March 2026.
+Built in ~45 minutes of AI execution time across 3 iterations at the SF Ralphthon hackathon, March 2026.
+
+### Development Timeline
+
+| Iteration | Focus | ACs | Time |
+|-----------|-------|-----|------|
+| 1 | Full-stack app build (FastAPI + Next.js + graph + chat) | 14/14 | ~14 min |
+| 2 | Semantic edges (o3), chat persistence, fun matches, UX polish | 12/12 | ~9 min |
+| 3 | 17 bug fixes, pytest tests, chat→graph sync, name extraction | 11/11 | ~8 min |
+
+### Workflow
+
+The entire app was built using an autonomous AI development loop:
+
+1. **Ouroboros** generated Socratic interview questions to crystallize requirements
+2. **Kkanbu** (taste oracle) answered interview questions as the user's proxy
+3. **Claude Code** mediated between Ouroboros and Kkanbu, executed builds, reviewed code, and committed
+4. After each iteration: evaluate → consult Kkanbu → interview → seed → run → repeat
 
 ## License
 
