@@ -97,9 +97,12 @@ class KnowledgeGraph:
         self.G.add_edge(
             edge.source, edge.target,
             edge_type=edge.edge_type,
+            relationship_type=edge.relationship_type,
             reasoning=edge.reasoning,
             strength=edge.strength,
             match_category=edge.match_category,
+            shared_themes=edge.shared_themes,
+            conversation_starter=edge.conversation_starter,
         )
 
     def get_edges_for_person(self, person_id: str) -> list[dict]:
@@ -131,6 +134,38 @@ class KnowledgeGraph:
             links.append({"source": u, "target": v, **attrs})
 
         return {"nodes": nodes, "links": links}
+
+    # ── Path finding ────────────────────────────────────────────
+
+    def find_paths_between(self, source_id: str, target_id: str, max_paths: int = 3) -> list[dict]:
+        """Find shortest paths between two persons, returning edge details along the way."""
+        if source_id not in self.G or target_id not in self.G:
+            return []
+        paths_info = []
+        try:
+            for path in nx.all_shortest_paths(self.G, source_id, target_id):
+                path_edges = []
+                for i in range(len(path) - 1):
+                    u, v = path[i], path[i + 1]
+                    edge_data = self.G.edges[u, v]
+                    u_name = self.G.nodes[u].get("name", u)
+                    v_name = self.G.nodes[v].get("name", v)
+                    path_edges.append({
+                        "from_id": u,
+                        "from_name": u_name,
+                        "to_id": v,
+                        "to_name": v_name,
+                        "edge_type": edge_data.get("edge_type", ""),
+                        "relationship_type": edge_data.get("relationship_type", ""),
+                        "edge_reasoning": edge_data.get("reasoning", ""),
+                        "strength": edge_data.get("strength", 0),
+                    })
+                paths_info.append({"steps": path_edges, "length": len(path) - 1})
+                if len(paths_info) >= max_paths:
+                    break
+        except nx.NetworkXNoPath:
+            pass
+        return paths_info
 
     # ── Context for LLM ──────────────────────────────────────────
 
@@ -213,9 +248,12 @@ class KnowledgeGraph:
                         self.G.add_edge(
                             edata["source"], edata["target"],
                             edge_type=edata.get("edge_type", ""),
+                            relationship_type=edata.get("relationship_type", ""),
                             reasoning=edata.get("reasoning", ""),
                             strength=edata.get("strength", 0.5),
                             match_category=edata.get("match_category", ""),
+                            shared_themes=edata.get("shared_themes", []),
+                            conversation_starter=edata.get("conversation_starter", ""),
                         )
                 return True
         except Exception:

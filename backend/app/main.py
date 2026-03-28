@@ -150,20 +150,34 @@ async def ingest_bio(req: IngestBioRequest):
         )
         graph.add_person(person)
 
-    # Add shared_interest edges to existing people with overlapping interests
+    # Compute semantic edges only for new person against existing participants
+    new_ctx = graph.get_person_context(person.person_id)
+    pairs = []
     for other in graph.get_all_persons():
         if other.person_id == person.person_id:
             continue
-        shared = set(i.lower() for i in person.interests) & set(i.lower() for i in other.interests)
-        if shared:
-            edge = Edge(
-                source=person.person_id,
-                target=other.person_id,
-                edge_type="shared_interest",
-                reasoning=f"Both interested in: {', '.join(shared)}",
-                strength=min(0.3 + len(shared) * 0.15, 1.0),
-            )
-            graph.add_edge(edge)
+        if graph.G.has_edge(person.person_id, other.person_id):
+            continue
+        other_ctx = graph.get_person_context(other.person_id)
+        pairs.append((person.person_id, other.person_id, new_ctx, other_ctx))
+
+    if pairs:
+        try:
+            semantic_edges = await llm.compute_batch_edges(pairs)
+            for edge_data in semantic_edges:
+                edge = Edge(
+                    source=edge_data["source"],
+                    target=edge_data["target"],
+                    edge_type="semantic",
+                    relationship_type=edge_data.get("relationship_type", ""),
+                    reasoning=edge_data.get("reasoning", ""),
+                    strength=edge_data.get("strength", 0.5),
+                    shared_themes=edge_data.get("shared_themes", []),
+                    conversation_starter=edge_data.get("conversation_starter", ""),
+                )
+                graph.add_edge(edge)
+        except Exception as e:
+            print(f"Semantic edge computation failed for {person.name}: {e}")
 
     await graph.save_to_sqlite()
     return {"status": "ok", "person": person.model_dump()}
@@ -211,43 +225,53 @@ async def ingest_batch(req: BatchImportRequest):
             graph.add_person(person)
             results.append(person.model_dump())
 
-    # Compute shared interest/skill edges using keyword overlap
+    # Compute semantic edges via LLM pairwise comparison for all pairs
     persons = graph.get_all_persons()
+    pairs = []
     for i in range(len(persons)):
         for j in range(i + 1, len(persons)):
             p1, p2 = persons[i], persons[j]
             if graph.G.has_edge(p1.person_id, p2.person_id):
                 continue
-            # Exact interest matches
-            shared_interests = set(k.lower() for k in p1.interests) & set(k.lower() for k in p2.interests)
-            # Exact skill matches
-            shared_skills = set(k.lower() for k in p1.skills) & set(k.lower() for k in p2.skills)
-            # Keyword overlap in interests (partial match)
-            p1_words = set(w.lower() for s in p1.interests + p1.skills for w in s.split() if len(w) > 3)
-            p2_words = set(w.lower() for s in p2.interests + p2.skills for w in s.split() if len(w) > 3)
-            keyword_overlap = p1_words & p2_words - {"and", "the", "for", "with"}
+            p1_ctx = graph.get_person_context(p1.person_id)
+            p2_ctx = graph.get_person_context(p2.person_id)
+            pairs.append((p1.person_id, p2.person_id, p1_ctx, p2_ctx))
 
-            reasons = []
-            if shared_interests:
-                reasons.append(f"shared interests: {', '.join(shared_interests)}")
-            if shared_skills:
-                reasons.append(f"shared skills: {', '.join(shared_skills)}")
-            if not reasons and len(keyword_overlap) >= 2:
-                reasons.append(f"overlapping keywords: {', '.join(list(keyword_overlap)[:5])}")
-
-            if reasons:
-                strength = min(0.3 + len(shared_interests) * 0.15 + len(shared_skills) * 0.1 + len(keyword_overlap) * 0.05, 1.0)
+    if pairs:
+        try:
+            semantic_edges = await llm.compute_batch_edges(pairs)
+            for edge_data in semantic_edges:
                 edge = Edge(
-                    source=p1.person_id,
-                    target=p2.person_id,
-                    edge_type="shared_interest",
-                    reasoning=f"Both connected via {'; '.join(reasons)}",
-                    strength=strength,
+                    source=edge_data["source"],
+                    target=edge_data["target"],
+                    edge_type="semantic",
+                    relationship_type=edge_data.get("relationship_type", ""),
+                    reasoning=edge_data.get("reasoning", ""),
+                    strength=edge_data.get("strength", 0.5),
+                    shared_themes=edge_data.get("shared_themes", []),
+                    conversation_starter=edge_data.get("conversation_starter", ""),
                 )
                 graph.add_edge(edge)
+        except Exception as e:
+            print(f"Batch semantic edge computation failed: {e}")
 
     await graph.save_to_sqlite()
     return {"status": "ok", "imported": len(results), "persons": results}
+
+
+# ── Duplicate detection ──────────────────────────────────────────
+
+@app.get("/api/check-duplicate")
+async def check_duplicate(name: str):
+    """Check if a person with this name already exists (case-insensitive exact match)."""
+    existing = graph.find_person_by_name(name)
+    if existing:
+        return {
+            "duplicate": True,
+            "existing_person": existing.model_dump(),
+            "message": f"This looks like someone already in the graph: {existing.name}. Same person?"
+        }
+    return {"duplicate": False}
 
 
 # ── Graph data ───────────────────────────────────────────────────
@@ -292,12 +316,39 @@ async def chat(req: ChatRequest):
             reasoning=["No participant data has been ingested yet."],
         )
 
+    # Check if this is a fun matching query
+    fun_keywords = ["unlikely pair", "perfect pair", "challenge my worldview", "challenge worldview",
+                     "fun match", "surprising match", "creative pairing", "who would challenge",
+                     "most unlikely", "unexpected connection", "fun matches"]
+    is_fun_match = any(kw in req.message.lower() for kw in fun_keywords)
+
     # Check if this is a recommendation query
     rec_keywords = ["who should i meet", "recommend", "who to meet", "who should i talk to", "suggest someone", "introduce me"]
     is_recommendation = any(kw in req.message.lower() for kw in rec_keywords)
 
     try:
-        if is_recommendation and req.person_id:
+        if is_fun_match:
+            result = await llm.generate_fun_matches(all_context)
+            categories = result.get("categories", [])
+
+            reply_parts = ["Here are some fun match insights:\n"]
+            reasoning_list = []
+            for cat in categories:
+                reply_parts.append(f"{cat.get('emoji', '✦')} **{cat.get('label', '')}**")
+                for match in cat.get("matches", [])[:2]:
+                    p1 = match.get("person1_name", "?")
+                    p2 = match.get("person2_name", "?")
+                    explanation = match.get("explanation", "")
+                    reply_parts.append(f"  • {p1} × {p2}: {explanation}")
+                    reasoning_list.append(f"{cat.get('label')}: {p1} × {p2} — {explanation}")
+                reply_parts.append("")
+
+            return ChatResponse(
+                reply="\n".join(reply_parts),
+                reasoning=reasoning_list,
+            )
+
+        elif is_recommendation and req.person_id:
             result = await llm.generate_recommendations(person_context, all_context, req.message)
             recs = result.get("recommendations", [])
 
@@ -313,6 +364,19 @@ async def chat(req: ChatRequest):
                         strength=rec.get("connection_strength", 0.5),
                     )
                     graph.add_edge(edge)
+
+            # Compute graph paths for each recommendation
+            all_paths = []
+            for rec in recs:
+                pid = rec.get("person_id", "")
+                if pid and req.person_id:
+                    paths = graph.find_paths_between(req.person_id, pid)
+                    for p in paths:
+                        all_paths.append({
+                            "from_name": graph.get_person(req.person_id).name if graph.get_person(req.person_id) else req.person_id,
+                            "to_name": rec.get("person_name", pid),
+                            "steps": p["steps"],
+                        })
 
             # Format reply
             reply_parts = [result.get("overall_reasoning", "Here are my recommendations:"), ""]
@@ -334,6 +398,7 @@ async def chat(req: ChatRequest):
                     for r in recs
                 ],
                 graph_highlights=[r.get("person_id", "") for r in recs if r.get("person_id")],
+                graph_paths=all_paths,
             )
         else:
             result = await llm.chat_with_agent(person_context, all_context, req.message, req.update_knowledge)

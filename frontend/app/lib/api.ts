@@ -42,6 +42,7 @@ export const api = {
       body: JSON.stringify({ message, person_id, update_knowledge }),
     }),
 
+  checkDuplicate: (name: string) => f(`/check-duplicate?name=${encodeURIComponent(name)}`),
   getMatches: () => f("/matches"),
   reset: () => f("/reset", { method: "POST" }),
 };
@@ -77,9 +78,29 @@ export type GraphLink = {
   source: string | GraphNode;
   target: string | GraphNode;
   edge_type: string;
+  relationship_type?: string;
   reasoning: string;
   strength: number;
   match_category?: string;
+  shared_themes?: string[];
+  conversation_starter?: string;
+};
+
+export type GraphPathStep = {
+  from_id: string;
+  from_name: string;
+  to_id: string;
+  to_name: string;
+  edge_type: string;
+  relationship_type: string;
+  edge_reasoning: string;
+  strength: number;
+};
+
+export type GraphPath = {
+  from_name: string;
+  to_name: string;
+  steps: GraphPathStep[];
 };
 
 export type ChatMessage = {
@@ -87,6 +108,7 @@ export type ChatMessage = {
   content: string;
   reasoning?: string[];
   recommended_people?: { person_id: string; name: string; reason: string }[];
+  graph_paths?: GraphPath[];
 };
 
 export type MatchCategory = {

@@ -113,18 +113,17 @@ export default function Home() {
           >
             + Ingest
           </button>
-          {tab === "graph" && (
-            <button
-              onClick={() => setChatOpen(!chatOpen)}
-              className={`text-sm rounded-lg px-3 py-1.5 transition-colors ${
-                chatOpen
-                  ? "bg-[#6366f1] text-white"
-                  : "bg-[#1a1a2e] hover:bg-[#2a2a3e] border border-[#2a2a3e] text-[#e0e0e8]"
-              }`}
-            >
-              💬 Chat
-            </button>
-          )}
+          <button
+            onClick={() => setChatOpen(!chatOpen)}
+            className={`text-sm rounded-lg px-4 py-1.5 transition-all duration-200 flex items-center gap-2 ${
+              chatOpen
+                ? "bg-[#6366f1] text-white shadow-lg shadow-[#6366f1]/25"
+                : "bg-[#1a1a2e] hover:bg-[#2a2a3e] border border-[#2a2a3e] text-[#e0e0e8] hover:border-[#6366f1]/50"
+            }`}
+          >
+            <span className="text-base">💬</span>
+            <span>{chatOpen ? "Close Chat" : "Ask Who to Meet"}</span>
+          </button>
         </div>
       </header>
 
@@ -148,16 +147,6 @@ export default function Home() {
                 setSelectedEdge(null);
               }}
             />
-            <ChatSidebar
-              isOpen={chatOpen}
-              onClose={() => setChatOpen(false)}
-              selectedPerson={selectedPerson}
-              updateKnowledge={updateKnowledge}
-              onToggleUpdate={setUpdateKnowledge}
-              persons={persons}
-              onSelectPerson={setSelectedPerson}
-              onHighlight={setHighlights}
-            />
           </>
         )}
 
@@ -173,6 +162,18 @@ export default function Home() {
         {/* Fun matches tab */}
         {tab === "fun" && <FunMatches />}
       </main>
+
+      {/* Chat sidebar — available from any tab */}
+      <ChatSidebar
+        isOpen={chatOpen}
+        onClose={() => setChatOpen(false)}
+        selectedPerson={selectedPerson}
+        updateKnowledge={updateKnowledge}
+        onToggleUpdate={setUpdateKnowledge}
+        persons={persons}
+        onSelectPerson={setSelectedPerson}
+        onHighlight={setHighlights}
+      />
 
       {/* Ingest modal */}
       <IngestModal

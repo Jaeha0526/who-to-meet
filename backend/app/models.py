@@ -36,10 +36,13 @@ class Conversation(BaseModel):
 class Edge(BaseModel):
     source: str  # person_id
     target: str  # person_id
-    edge_type: str  # past_interaction | recommended_match | shared_interest
+    edge_type: str  # past_interaction | recommended_match | shared_interest | semantic
+    relationship_type: str = ""  # shared_mission | complementary_skills | mutual_learning | creative_tension | shared_experience | potential_collaborators
     reasoning: str = ""
     strength: float = 0.5
     match_category: str = ""  # startup_cofounders | potential_friends | creative_pair
+    shared_themes: list[str] = []
+    conversation_starter: str = ""
 
 
 # ── API request / response ───────────────────────────────────────
@@ -71,6 +74,7 @@ class ChatResponse(BaseModel):
     reasoning: list[str] = []
     recommended_people: list[dict] = []
     graph_highlights: list[str] = []  # node/edge ids to highlight
+    graph_paths: list[dict] = []  # [{from, to, via, edge_reasoning, edge_type}]
 
 
 class GraphData(BaseModel):

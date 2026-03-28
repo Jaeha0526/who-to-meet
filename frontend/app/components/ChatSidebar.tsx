@@ -24,10 +24,29 @@ export default function ChatSidebar({
   onSelectPerson,
   onHighlight,
 }: Props) {
-  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const STORAGE_KEY = "who-to-meet-chat-history";
+
+  const [messages, setMessages] = useState<ChatMessage[]>(() => {
+    if (typeof window !== "undefined") {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) return JSON.parse(saved);
+      } catch {}
+    }
+    return [];
+  });
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  // Persist chat history to localStorage
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
+      } catch {}
+    }
+  }, [messages]);
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -55,6 +74,7 @@ export default function ChatSidebar({
           content: res.reply,
           reasoning: res.reasoning,
           recommended_people: res.recommended_people,
+          graph_paths: res.graph_paths,
         },
       ]);
       if (res.graph_highlights?.length) {
@@ -84,12 +104,23 @@ export default function ChatSidebar({
             </span>
           )}
         </div>
-        <button
-          onClick={onClose}
-          className="text-[#8888a0] hover:text-white transition-colors text-xl"
-        >
-          ✕
-        </button>
+        <div className="flex items-center gap-2">
+          {messages.length > 0 && (
+            <button
+              onClick={() => setMessages([])}
+              className="text-xs text-[#8888a0] hover:text-red-400 transition-colors px-2 py-1 rounded hover:bg-[#1a1a2e]"
+              title="Clear chat history"
+            >
+              Clear
+            </button>
+          )}
+          <button
+            onClick={onClose}
+            className="text-[#8888a0] hover:text-white transition-colors text-xl"
+          >
+            ✕
+          </button>
+        </div>
       </div>
 
       {/* Person selector */}
@@ -110,13 +141,15 @@ export default function ChatSidebar({
           ))}
         </select>
 
-        {/* Toggle */}
-        <div className="flex items-center gap-2">
-          <span className="text-xs text-[#8888a0]">Update</span>
+        {/* Knowledge Update Toggle */}
+        <div className="flex items-center gap-2" title="When ON, your messages teach the system new facts about people. When OFF, just chat and get recommendations.">
+          <span className={`text-xs font-medium ${updateKnowledge ? "text-[#f59e0b]" : "text-[#8888a0]"}`}>
+            {updateKnowledge ? "📝 Learning" : "💬 Chat"}
+          </span>
           <button
             onClick={() => onToggleUpdate(!updateKnowledge)}
             className={`w-10 h-5 rounded-full relative transition-colors ${
-              updateKnowledge ? "bg-[#6366f1]" : "bg-[#2a2a3e]"
+              updateKnowledge ? "bg-[#f59e0b]" : "bg-[#2a2a3e]"
             }`}
           >
             <span
@@ -155,24 +188,62 @@ export default function ChatSidebar({
                 <div className="bg-[#1a1a2e] rounded-2xl rounded-bl-sm px-4 py-3 max-w-[95%] text-sm whitespace-pre-wrap">
                   {msg.content}
                 </div>
-                {/* Reasoning transparency */}
+
+                {/* Reasoning chain — always visible */}
                 {msg.reasoning && msg.reasoning.length > 0 && (
-                  <details className="ml-2">
-                    <summary className="text-xs text-[#8888a0] cursor-pointer hover:text-[#6366f1]">
-                      Show reasoning ({msg.reasoning.length} steps)
-                    </summary>
-                    <div className="mt-1 ml-2 space-y-1">
+                  <div className="ml-2 bg-[#0d0d15] border border-[#1e1e30] rounded-lg p-3 max-w-[95%]">
+                    <div className="text-xs text-[#6366f1] font-medium mb-2 flex items-center gap-1.5">
+                      <span className="w-3 h-3 rounded-full bg-[#6366f1]/20 flex items-center justify-center text-[8px]">◈</span>
+                      Reasoning Chain
+                    </div>
+                    <div className="space-y-1.5">
                       {msg.reasoning.map((r, j) => (
-                        <div
-                          key={j}
-                          className="text-xs text-[#8888a0] bg-[#0a0a0f] rounded px-2 py-1"
-                        >
-                          {r}
+                        <div key={j} className="flex gap-2 text-xs">
+                          <span className="text-[#6366f1] shrink-0 mt-0.5">→</span>
+                          <span className="text-[#a0a0b8]">{r}</span>
                         </div>
                       ))}
                     </div>
-                  </details>
+                  </div>
                 )}
+
+                {/* Graph paths — always visible */}
+                {msg.graph_paths && msg.graph_paths.length > 0 && (
+                  <div className="ml-2 bg-[#0d0d15] border border-[#1e1e30] rounded-lg p-3 max-w-[95%]">
+                    <div className="text-xs text-[#22c55e] font-medium mb-2 flex items-center gap-1.5">
+                      <span className="w-3 h-3 rounded-full bg-[#22c55e]/20 flex items-center justify-center text-[8px]">◉</span>
+                      Graph Connections
+                    </div>
+                    {msg.graph_paths.map((path, pi) => (
+                      <div key={pi} className="mb-2 last:mb-0">
+                        <div className="text-xs text-[#c0c0d0] mb-1">
+                          {path.from_name} → {path.to_name}
+                        </div>
+                        {path.steps.map((step, si) => (
+                          <div key={si} className="flex items-start gap-2 text-xs ml-2 mb-1">
+                            <span className="text-[#22c55e] shrink-0">⟶</span>
+                            <div>
+                              <span className="text-[#8888a0]">
+                                {step.from_name} — {step.to_name}
+                              </span>
+                              {step.relationship_type && (
+                                <span className="ml-1.5 px-1.5 py-0.5 rounded bg-[#22c55e]/10 text-[#22c55e] text-[10px]">
+                                  {step.relationship_type.replace(/_/g, " ")}
+                                </span>
+                              )}
+                              {step.edge_reasoning && (
+                                <div className="text-[#707088] mt-0.5 italic">
+                                  &quot;{step.edge_reasoning.slice(0, 120)}{step.edge_reasoning.length > 120 ? "..." : ""}&quot;
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    ))}
+                  </div>
+                )}
+
                 {/* Recommended people */}
                 {msg.recommended_people &&
                   msg.recommended_people.length > 0 && (
@@ -187,7 +258,7 @@ export default function ChatSidebar({
                             {rp.name}
                           </span>
                           <span className="text-[#8888a0] ml-2">
-                            {rp.reason?.slice(0, 80)}...
+                            {rp.reason?.slice(0, 100)}
                           </span>
                         </button>
                       ))}

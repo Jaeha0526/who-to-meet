@@ -14,10 +14,11 @@ function Tag({ text, color = "indigo" }: { text: string; color?: string }) {
     green: "bg-emerald-500/20 text-emerald-300 border-emerald-500/30",
     amber: "bg-amber-500/20 text-amber-300 border-amber-500/30",
     purple: "bg-purple-500/20 text-purple-300 border-purple-500/30",
+    pink: "bg-pink-500/20 text-pink-300 border-pink-500/30",
   };
   return (
     <span
-      className={`inline-block text-xs px-2 py-0.5 rounded border ${colors[color]}`}
+      className={`inline-block text-xs px-2 py-0.5 rounded border ${colors[color] || colors.indigo}`}
     >
       {text}
     </span>
@@ -27,8 +28,15 @@ function Tag({ text, color = "indigo" }: { text: string; color?: string }) {
 export default function NodeDetail({ node, edge, onClose }: Props) {
   if (!node && !edge) return null;
 
+  const edgeTypeColor = (type: string) => {
+    if (type === "recommended_match") return "amber";
+    if (type === "shared_interest") return "green";
+    if (type === "semantic") return "purple";
+    return "indigo";
+  };
+
   return (
-    <div className="fade-in fixed left-4 bottom-4 w-[380px] max-h-[60vh] bg-[#12121a] border border-[#2a2a3e] rounded-xl overflow-hidden shadow-2xl z-40">
+    <div className="fade-in fixed left-4 bottom-4 w-[380px] max-h-[60vh] bg-[#12121a]/95 backdrop-blur-md border border-[#2a2a3e] rounded-xl overflow-hidden shadow-2xl z-40">
       <div className="p-4 border-b border-[#2a2a3e] flex justify-between items-center">
         <h3 className="font-medium text-sm">
           {node ? (node.type === "person" ? "👤 " : "💬 ") : "🔗 "}
@@ -119,53 +127,71 @@ export default function NodeDetail({ node, edge, onClose }: Props) {
         {/* Edge detail */}
         {edge && (
           <>
-            <div>
-              <p className="text-xs text-[#555] uppercase tracking-wide mb-1">
-                Connection Type
-              </p>
+            <div className="flex items-center gap-2">
               <Tag
                 text={edge.edge_type.replace(/_/g, " ")}
-                color={
-                  edge.edge_type === "recommended_match"
-                    ? "amber"
-                    : edge.edge_type === "shared_interest"
-                    ? "green"
-                    : "indigo"
-                }
+                color={edgeTypeColor(edge.edge_type)}
               />
+              {(edge as any).relationship_type && (
+                <Tag
+                  text={(edge as any).relationship_type.replace(/_/g, " ")}
+                  color="pink"
+                />
+              )}
             </div>
             <div>
               <p className="text-xs text-[#555] uppercase tracking-wide mb-1">
                 Strength
               </p>
-              <div className="w-full h-2 bg-[#1a1a2e] rounded-full overflow-hidden">
-                <div
-                  className="h-full bg-[#6366f1] rounded-full"
-                  style={{ width: `${(edge.strength || 0.5) * 100}%` }}
-                />
+              <div className="flex items-center gap-2">
+                <div className="flex-1 h-2 bg-[#1a1a2e] rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-[#6366f1] rounded-full transition-all duration-300"
+                    style={{ width: `${(edge.strength || 0.5) * 100}%` }}
+                  />
+                </div>
+                <span className="text-xs text-[#8888a0] w-8 text-right">
+                  {((edge.strength || 0.5) * 100).toFixed(0)}%
+                </span>
               </div>
-              <p className="text-xs text-[#8888a0] mt-0.5">
-                {((edge.strength || 0.5) * 100).toFixed(0)}%
-              </p>
             </div>
             {edge.reasoning && (
               <div>
                 <p className="text-xs text-[#555] uppercase tracking-wide mb-1">
                   Why this connection
                 </p>
-                <p className="text-sm text-[#e0e0e8] bg-[#1a1a2e] rounded-lg p-3 leading-relaxed">
+                <p className="text-sm text-[#c0c0d0] bg-[#0d0d15] rounded-lg p-3 leading-relaxed border border-[#1e1e30]">
                   {edge.reasoning}
+                </p>
+              </div>
+            )}
+            {(edge as any).shared_themes && (edge as any).shared_themes.length > 0 && (
+              <div>
+                <p className="text-xs text-[#555] uppercase tracking-wide mb-1">
+                  Shared Themes
+                </p>
+                <div className="flex flex-wrap gap-1">
+                  {(edge as any).shared_themes.map((t: string) => (
+                    <Tag key={t} text={t} color="purple" />
+                  ))}
+                </div>
+              </div>
+            )}
+            {(edge as any).conversation_starter && (
+              <div>
+                <p className="text-xs text-[#555] uppercase tracking-wide mb-1">
+                  Conversation Starter
+                </p>
+                <p className="text-sm text-[#a0a0b8] bg-[#0d0d15] rounded-lg p-3 italic border border-[#1e1e30]">
+                  &ldquo;{(edge as any).conversation_starter}&rdquo;
                 </p>
               </div>
             )}
             {edge.match_category && (
               <div>
-                <p className="text-xs text-[#555] uppercase tracking-wide mb-1">
-                  Category
-                </p>
                 <Tag
                   text={edge.match_category.replace(/_/g, " ")}
-                  color="purple"
+                  color="amber"
                 />
               </div>
             )}

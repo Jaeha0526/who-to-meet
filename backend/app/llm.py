@@ -10,7 +10,7 @@ load_dotenv(os.path.join(os.path.dirname(__file__), '..', '..', '.env'))
 
 _api_key = os.getenv("OPENAI_API_KEY", "")
 client = AsyncOpenAI(api_key=_api_key) if _api_key and not _api_key.startswith("your-") else None
-MODEL = "o3-mini"  # fast reasoning model
+MODEL = "o3"  # upgraded reasoning model
 
 
 def _check_client():
@@ -209,6 +209,82 @@ Return valid JSON:
     return json.loads(response.choices[0].message.content)
 
 
+async def compute_pairwise_edge(person1_context: str, person2_context: str) -> dict:
+    """Use o3 to compute a semantic edge between two persons with structured output."""
+    prompt = f"""You are an expert relationship analyst at a hackathon called Ralphthon.
+Analyze these two participants and determine their deepest potential connection.
+
+PERSON 1:
+{person1_context}
+
+PERSON 2:
+{person2_context}
+
+Look beyond surface keyword matches. Consider:
+- Shared deeper goals or missions (not just both liking "AI" but WHY they care about it)
+- Complementary skills that could create something neither could alone
+- Overlapping life experiences or worldviews
+- Potential for mutual mentorship or learning
+- Creative tension — ways they might challenge each other productively
+
+Return valid JSON:
+{{
+  "has_meaningful_connection": true/false,
+  "relationship_type": "one of: shared_mission | complementary_skills | mutual_learning | creative_tension | shared_experience | potential_collaborators",
+  "reasoning": "A specific, compelling 2-3 sentence explanation of WHY these two should connect. Reference actual details from their profiles, not generic statements.",
+  "strength": 0.0-1.0,
+  "shared_themes": ["specific theme 1", "specific theme 2"],
+  "conversation_starter": "A specific opener one could use with the other"
+}}
+
+If there is no meaningful connection beyond trivial overlap, set has_meaningful_connection to false and strength below 0.2."""
+
+    _check_client()
+    response = await client.chat.completions.create(
+        model=MODEL,
+        messages=[{"role": "user", "content": prompt}],
+        response_format={"type": "json_object"},
+    )
+    return json.loads(response.choices[0].message.content)
+
+
+async def compute_batch_edges(persons_contexts: list[tuple[str, str, str, str]]) -> list[dict]:
+    """Compute semantic edges for a batch of person pairs.
+
+    Each tuple is (person1_id, person2_id, person1_context, person2_context).
+    Returns list of edge dicts.
+    """
+    import asyncio
+
+    async def compute_one(p1_id: str, p2_id: str, p1_ctx: str, p2_ctx: str) -> dict | None:
+        try:
+            result = await compute_pairwise_edge(p1_ctx, p2_ctx)
+            if result.get("has_meaningful_connection", False) and result.get("strength", 0) >= 0.2:
+                return {
+                    "source": p1_id,
+                    "target": p2_id,
+                    "relationship_type": result.get("relationship_type", "shared_interest"),
+                    "reasoning": result.get("reasoning", ""),
+                    "strength": result.get("strength", 0.5),
+                    "shared_themes": result.get("shared_themes", []),
+                    "conversation_starter": result.get("conversation_starter", ""),
+                }
+        except Exception as e:
+            print(f"Edge computation failed for {p1_id}-{p2_id}: {e}")
+        return None
+
+    # Process in batches of 10 concurrent requests to avoid rate limits
+    edges = []
+    batch_size = 10
+    for i in range(0, len(persons_contexts), batch_size):
+        batch = persons_contexts[i:i + batch_size]
+        tasks = [compute_one(p1_id, p2_id, p1_ctx, p2_ctx) for p1_id, p2_id, p1_ctx, p2_ctx in batch]
+        results = await asyncio.gather(*tasks)
+        edges.extend([r for r in results if r is not None])
+
+    return edges
+
+
 async def generate_fun_matches(all_persons_context: str) -> dict:
     """Generate fun matching categories between participants."""
     prompt = f"""You are a creative matchmaker at Ralphthon hackathon. Based on participant data, create fun matching categories.
@@ -222,6 +298,8 @@ Create matches in these categories:
 3. 🎨 Creative Pairings: Unexpected but interesting combinations
 4. 🧠 Brain Trust: People who together would have amazing problem-solving discussions
 5. 🌍 World Changers: People whose combined goals could create real impact
+6. 🎲 Most Unlikely But Perfect Pair: Two people who seem totally unrelated on the surface but have a deep hidden connection — the explanation should be surprising and compelling
+7. 🔥 Person Who Would Challenge Your Worldview: Pairs where one person's perspective would genuinely shake up the other's assumptions — explain what specific belief or approach would be challenged and why that's valuable
 
 For EACH match, give SPECIFIC reasons based on actual data, not vague statements.
 

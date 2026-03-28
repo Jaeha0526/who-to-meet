@@ -19,11 +19,26 @@ export default function IngestModal({ isOpen, onClose, onIngested }: Props) {
   const [batchJson, setBatchJson] = useState("");
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState("");
+  const [duplicateWarning, setDuplicateWarning] = useState<{name: string; existingName: string} | null>(null);
 
   if (!isOpen) return null;
 
   const handlePaste = async () => {
     if (!name.trim() || !bioText.trim()) return;
+
+    // Check for duplicate first (unless user already confirmed)
+    if (!duplicateWarning) {
+      try {
+        const check = await api.checkDuplicate(name.trim());
+        if (check.duplicate) {
+          setDuplicateWarning({name: name.trim(), existingName: check.existing_person.name});
+          setResult(`⚠ ${check.message}`);
+          return;
+        }
+      } catch {}
+    }
+    setDuplicateWarning(null);
+
     setLoading(true);
     try {
       const res = await api.ingestBio(name, bioText);
@@ -125,13 +140,43 @@ export default function IngestModal({ isOpen, onClose, onIngested }: Props) {
                 rows={8}
                 className="w-full bg-[#1a1a2e] border border-[#2a2a3e] rounded-lg px-3 py-2 text-sm outline-none focus:border-[#6366f1] resize-none"
               />
-              <button
-                onClick={handlePaste}
-                disabled={loading || !name.trim() || !bioText.trim()}
-                className="bg-[#6366f1] hover:bg-[#4f46e5] disabled:opacity-50 text-white rounded-lg px-4 py-2 text-sm w-full"
-              >
-                {loading ? "Extracting..." : "Add Person"}
-              </button>
+              {duplicateWarning && (
+                <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-3">
+                  <p className="text-sm text-amber-300 mb-2">
+                    ⚠ This looks like someone already in the graph: <strong>{duplicateWarning.existingName}</strong>. Same person?
+                  </p>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => {
+                        // Proceed with update (will merge with existing)
+                        setDuplicateWarning(null);
+                        handlePaste();
+                      }}
+                      className="bg-amber-600 hover:bg-amber-700 text-white rounded-lg px-3 py-1.5 text-sm flex-1"
+                    >
+                      Yes, update their info
+                    </button>
+                    <button
+                      onClick={() => {
+                        setDuplicateWarning(null);
+                        setResult("");
+                      }}
+                      className="bg-[#2a2a3e] hover:bg-[#3a3a4e] text-white rounded-lg px-3 py-1.5 text-sm flex-1"
+                    >
+                      No, different person
+                    </button>
+                  </div>
+                </div>
+              )}
+              {!duplicateWarning && (
+                <button
+                  onClick={handlePaste}
+                  disabled={loading || !name.trim() || !bioText.trim()}
+                  className="bg-[#6366f1] hover:bg-[#4f46e5] disabled:opacity-50 text-white rounded-lg px-4 py-2 text-sm w-full"
+                >
+                  {loading ? "Extracting..." : "Add Person"}
+                </button>
+              )}
             </>
           )}
 
