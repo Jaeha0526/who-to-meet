@@ -35,12 +35,13 @@ export default function FunMatches() {
   };
 
   // Separate special featured cards from regular categories
-  const specialCats = categories.filter((c) =>
-    SPECIAL_CATEGORIES.some((s) => c.category.toLowerCase().includes(s.replace(/_/g, "")))
-    || c.category.toLowerCase().includes("unlikely")
-    || c.category.toLowerCase().includes("challenge")
-    || c.category.toLowerCase().includes("worldview")
-  );
+  const specialCats = categories.filter((c) => {
+    const cat = (c.category || "").toLowerCase();
+    return SPECIAL_CATEGORIES.some((s) => cat.includes(s.replace(/_/g, "")))
+      || cat.includes("unlikely")
+      || cat.includes("challenge")
+      || cat.includes("worldview");
+  });
   const regularCats = categories.filter((c) => !specialCats.includes(c));
 
   return (

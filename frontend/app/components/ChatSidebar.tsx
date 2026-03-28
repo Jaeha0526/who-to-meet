@@ -80,7 +80,8 @@ export default function ChatSidebar({
       const res = await api.chat(
         msg,
         selectedPerson?.person_id,
-        updateKnowledge
+        updateKnowledge,
+        abortRef.current?.signal
       );
       setMessages((prev) => [
         ...prev,

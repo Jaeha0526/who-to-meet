@@ -36,10 +36,11 @@ export const api = {
       body: JSON.stringify({ participants }),
     }),
 
-  chat: (message: string, person_id?: string, update_knowledge?: boolean) =>
+  chat: (message: string, person_id?: string, update_knowledge?: boolean, signal?: AbortSignal) =>
     f("/chat", {
       method: "POST",
       body: JSON.stringify({ message, person_id, update_knowledge }),
+      signal,
     }),
 
   checkDuplicate: (name: string) => f(`/check-duplicate?name=${encodeURIComponent(name)}`),
