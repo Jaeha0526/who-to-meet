@@ -1,0 +1,296 @@
+1on1 fabio
+2026.03.29 Sun AM 6:35 ・ 17Minutes 9seconds
+박세정
+
+
+Attendees 1 00:00
+Hi I’m 박세정. It's more of a Korean thing what the guy introduced himself as a Naver PC.
+This is made by Naver. I would say Naver and KaKao like these two are pretty much the biggest software companies in Korea.
+
+Attendees 2 00:14
+Hi I’m Fabio. Oh cool are they owned by any of like the big I don't know like a Samsung or like, you know or is it just independent
+
+Attendees 1 00:21
+they are they themselves are the big Tech companies in Korea although it's not comparable to the ones in the US because you know, like, like the size of the capital is just totally different.
+I would say I don't know like one, one 50th of whatever US company that you can compare like within the same industry.
+Like if it's the top in the Us, I would say like 50 times more valuation in general than the one that's the top
+
+Attendees 2 00:46
+in Korea there. And that's also to say like US valuations are pretty.
+I feel like they are inflated somewhat but it's also like there's a lot of capital here a lot of talent of course you know exactly.
+
+Attendees 1 00:57
+No no no I was stupid because I shouldn't put it as English but I put it in.
+Yep
+
+Attendees 2 01:06
+nice still thinking I like that.
+
+Attendees 1 01:08
+Oh yeah yeah so yeah so do you live here or
+
+Attendees 2 01:13
+no I don't live here. I live on the East coast in New York.
+
+Attendees 1 01:16
+Wait did you fly just for this?
+
+Attendees 2 01:18
+No but I was here already for almost two weeks.
+My plan is to leave tomorrow.
+I haven't booked my ticket yet.
+Oh little last minute but oh nice nice my plan is to go to Colorado and then fly home after a week staying there fly home
+
+Attendees 1 01:33
+taking vacation or like is there like the purposeful trouble like looking at how people are using AI?
+Because these days I see some of the engineers are actually kind of like I understand that because I'm really confused about my job at the same time like right now I do see the big waves come in.
+I think it's going to happen at the earliest like within a year at the latest like three years.
+And I do know like there are some brave ventures who decided to kind of like
+
+Attendees 1 01:58
+take a long vacation like try to see what other engineers and other world countries are actually thinking of.
+Actually I think one of the one of the AI fronts here like Korean engineer I think he participated in this Hecathon.
+I heard that he stopped his company and then he's just like participating literally all Hecathons that's happening in the world related to this looping AI thing.
+
+Attendees 2 02:25
+That's really cool and I think the looping AI is such potential right?
+That's like because as soon as you can have an AI like, you remove the human feedback that's necessary for these agents to realize hey, I made a mistake but if they can recognize their own mistake in that loop I mean that's powerful that's definitely powerful and that's cool.
+But so to answer your question, I was here on kind of vacation.
+I have a remote job so I've been just kind of traveling a lot recently
+
+Attendees 2 02:53
+and so I was here for a week visiting a friend and then the weather was so nice and decided to stay longer you know and then I was like, oh, let me check out the Tech scene you know, it's the top in the world.
+Might as well go to some Mahagathon's network and see what other engineers are doing.
+You know, I would like to be I know I'm not at the cutting edge, but I would like to see what even that looks like.
+
+Attendees 1 03:14
+Honestly, I feel extremely few people are on the cutting edge thesis.
+I think the definition of the cutting edge like, just, you know,
+
+Attendees 2 03:26
+in terms of like what happens
+
+Attendees 1 03:27
+last week yeah
+
+Attendees 2 03:28
+right it's like the cutting edge is like it's not even.
+I mean there are definitely people with that longer term vision of like, hey, LLMS are not even the right way to do AI and they're thinking five, ten years what's like the future architecture that will then be scaled up by like, I don't know, I'm not there at that level.
+So even just speaking at like adoption phase, how fast can you adopt is already an engineering problem.
+
+Attendees 1 03:54
+Yeah it's weird. I totally resonate with that.
+Exactly that's what I meant.
+I don't think there is one single person or the team like who themselves are very confident that they're going to win this game.
+I think just like everyone is playing their different game not knowing where it's going to go.
+And one of them will be luckily be more beneficial or be in the more advantageous position like when the time comes.
+
+Attendees 1 04:19
+But yeah, I think actually the legacy senior ins I do see they actually have disadvantages in a way that like so I work at LinkedIn when I see a lot of especially very senior engineers I think there's a tendency that they are reluctant to accept those things.
+I think underneath there is kind of like psychological preventive reaction that they cannot just accept that these fucking like something is smarter than
+
+Attendees 2 04:50
+I would be pissed. I mean I'm so glad that this happened early in my career because I didn't me too, me too and like then it's a double-edge sword because it's like okay, you didn't lay the foundations a senior engineer spent 10 years writing code from scratch and you know, going through kind of, let's say the legacy standard but very good practices that have maintained
+
+Attendees 2 05:11
+and growing our technology ecosystem.
+But at the same time things are changing so fast that those things are getting thrown out of the window even though what we had is very good and has maintained and has grown the innovation like apps services, the internet there's a seismic shift that's happening.
+I feel like to those word flows and how they look like so yeah super cool.
+
+Attendees 1 05:42
+Have you ever talked with your co-workers regarding this matter?
+How do people around you think about BECA for example, for example, there are some people or engineers that believe that most of the digital world works will be either replaced or be changed in different forms or like will be transformed into different industry.
+For example, if there are some legacy industries that the software isn't yet to be to be adopted completely maybe there's got to be more dimes but
+
+Attendees 1 06:22
+the very traditional terms of software engineers or the software companies I kind of believe that at least half of them will be reduced or just size-wise although they're going to produce probably the same amount or a little more and eventually a lot of like engineers or even any kind of like the white collar jobs will be replaced.
+I truly believe at least half of them will be just gone within three years.
+
+Attendees 1 06:48
+Whereas there are people who who think like it's just never going to happen.
+Yeah how do people around you think?
+
+Attendees 2 06:56
+Really good question actually you mind if we pause
+
+Attendees 1 06:59
+sure sure what happened?
+Ye
+
+Attendees 2 07:05
+I think from my very limited experience talking to my co-workers we don't talk usually about that but I would say the management seems skeptical of AI and specifically the LLMS in terms of their reliability.
+And to a certain point I feel like it is valid that these I guess it's kind of philosophical.
+It's like if you can like,
+
+Attendees 2 07:39
+if you can reason or if you can look like you're reasoning like a human you can give human like responses you can react at least through text like a human you know, it's kind of like what like how intelligent and is that even the right word?
+This is like I don't know I honestly I have no idea like I have so many different confusing thoughts.
+
+Attendees 2 08:05
+Nonetheless, these systems are powerful and to your point like even if they're very skeptical people that don't believe or skeptical people that don't believe that AI will take everyone's job which is fair okay maybe not everyone's job but it will definitely impact everyone's job and all the white colors and hopefully in a way that you know, is not going to be catastrophic.
+
+Attendees 1 08:31
+Hopefully. Yeah hopefully I also hope it very much.
+But that's also the reason why I think people should proactively think about this because if it happens in a more accurate way like there's got to be, we have to have an agreement like within the society, like between people that well, we should have some buffer time we should kind of intentionally
+
+Attendees 2 08:59
+or like some ubi at that point right like, let's say it also depends how it happens right?
+Because if it's like a decentralized where it's like, let's say because these open source models are getting are very good you know, of course, you're not at the state of the art ops 4.6, GPT, 5.4, whatever but it's still like to the point where they can like but who knows in five years they'll be really, really good you know,
+
+Attendees 2 09:29
+you'll probably be able to run them from like not that expensive hardware and you keep going with that everyone will have their own like kind of AI assistant for sure on their phone somehow I don't know how that look like from like an engineering point of view but I truly believe that.
+So it's either that
+
+Attendees 2 09:53
+and, or, you know, big Tech consolidates all like the compute so it's like there's no, really none and then they kind of like they become like the overlords but then think about it we just like bomb the data centers it's over you know, you just launch like some drones at the data centers and boom, their power is done.
+It would be actually, that would be so funny if like a bunch of white collar workers you know, a bunch of like accountants and like, you know, software engineers.
+
+Attendees 2 10:19
+It's like the way to get back their jobs is like destroying the data centers.
+It's like, ah, we have to get rid of the AI so that we can get our jobs back so these companies can keep functioning and making money.
+
+Attendees 1 10:30
+I kind of think like for sure like much indirect version of it is already happening in a lot of big Tech companies for example.
+Interesting because I don't know, I don't know if it's just like an instinct that they just want to be preventive towards what they see about the AI.
+I do feel like there is for sure like also some intentional organizational move that they're kind of intentionally prevent AI to be too much aggressively adopted.
+I don't know that's just my feel
+
+Attendees 2 11:02
+popular in terms of usage or sorry did you say popular or the AI to be you're saying that they're kind of like labomizing the AI or are you saying they're like surprising the use internally of the company or
+
+Attendees 1 11:17
+probably not suppressing the internal use suppressing their mental mindset itself
+
+Attendees 2 11:23
+oh, okay
+
+Attendees 1 11:24
+so they might not recognize it but I think that's kind of
+
+Attendees 2 11:28
+I see, I see okay I see what you're saying and kind of unconscious kind of like a self-preservation sort of thing.
+
+Attendees 1 11:34
+Yeah yeah exactly
+
+Attendees 2 11:35
+that's interesting
+
+Attendees 1 11:37
+I think so
+
+Attendees 2 11:38
+yeah I mean, I wouldn't and you said you work at LinkedIn, LinkedIn so that, I mean, I would say that's a pretty I don't know, would you consider that a big Tech company?
+I would I don't know though I don't know what the definition is.
+
+Attendees 1 11:52
+The way it operates was much more like a big Tech company than I expected which was kind of disappointing.
+I would say it's a big Tech company.
+
+Attendees 2 12:03
+So that's interesting that you have you must be talking from experience there and then also discussing friends or their own experiences in like in terms of resistance.
+And I guess I can kind of see that honestly at my institution where I work primarily which is in Pharma it's like they're just so slow like we're not even we're not on cloud COO we're barely on like GPT.
+We're banned from using any sort of external tools which fair enough we have like
+
+Attendees 2 12:32
+clinical data right? With, like personal information of people with diseases and treatments and stuff.
+Of course that's a lot of like confidential stuff that needs to be kept in RUPT but like we were trying to have a hackathon internally and the goal of VP was like hey, give everyone access to cloud code.
+That's like we're looking and then immediately they started complaining about the budget and it's like
+
+Attendees 2 13:01
+we're a pharma company spending billions every year and you're worried about like 100, 200 gram a year in like token usage like you're not going to make it if that's what you're worried about you know what I mean like I don't know it's kind of and I cannot be that blunt.
+Of course
+
+Attendees 1 13:18
+I believe that's a combination of that unconscious kind of like psychological protection of themselves plus kind of strategic I don't know slowing down the process to further the job security.
+
+Attendees 2 13:31
+And also like from a compliance point of view, these tools are new like cloud code is like a year what year and a half
+
+Attendees 1 13:37
+Pharma that's a different story.
+I would have probably done the same thing at least until now because I believe it's only been like three months since the cloud or other models became this good.
+Yeah true because before then I didn't have this view but now once I saw that
+
+Attendees 2 13:54
+it was like a paradigm shift.
+
+Attendees 1 13:56
+I just have to believe that they are definitely I don't know at least 50 times smarter than me.
+
+Attendees 2 14:01
+Yeah which is crazy because sometimes they do dumb stuff right and it's like it's weird when that happens.
+But I think and Andre Karposostic I'm sure you've watched like some of these like I feel like he's like the poster of her like the Zeta guys like mindset of the AI innovator but it's like that nines, the reliability, the March of Nines like just getting the AIs.
+So they're already smarter than most
+
+Attendees 2 14:30
+or at least more organized and more knowledgeable and systematic than most humans and engineers.
+I feel like on a normal basis but then it's like, how do you make that like so it's 99.99% of the time it's not 99% where it's that 1% fails.
+It's like, oh, production went down you know so I don't know it's
+
+Attendees 1 14:50
+yeah I think that's the gist of this Ralph Thon because the main purpose of this is like make sure that just like just by looping more smartly and putting more smart guard rails, we just exponentially decrease the error rate basically.
+
+Attendees 2 15:09
+And speaking of which, I'm actually about to launch my Ralph F.
+Finally it took me so long to get it set up.
+I think it's ready.
+
+Attendees 1 15:16
+What tool are you using?
+
+Attendees 2 15:18
+I'm using? Well, what do you mean by
+
+Attendees 1 15:23
+like what framework like what do you mean by rough?
+
+Attendees 2 15:26
+Oh I guess I did like the spec loop like it was like the raw MD markdown files and then I edited cloud code directly but I think it was from the founder like Crater from his repo structure.
+It had like four type of files
+
+Attendees 1 15:45
+the founder of the Club
+
+Attendees 2 15:47
+of Ralph of the Kes Yes Jeffrey first named Basis that's not me but that's cool.
+Yeah. And actually I always where is Jeffrey right now because I think I missed part of the talk
+
+Attendees 1 16:02
+Yeah he's going to speak in the speaker session.
+
+Attendees 2 16:03
+Okay that's sick but anyway yeah but I'm excited because I'm going to use open source models because I don't have the Open AI credits.
+So I think I was telling you about that or maybe not.
+I can't remember
+
+Attendees 1 16:15
+which one the,
+
+Attendees 2 16:16
+I didn't register in time for Open AI Pro.
+
+Attendees 1 16:21
+I mean they just gave us like like seven minutes literally.
+
+Attendees 2 16:24
+Yeah right
+
+Attendees 1 16:25
+they opened at like 42 and 942 and then
+
+Attendees 2 16:28
+I think it was in the bathroom.
+I was like I came out and it was like 1020 and I looked I'm like, but anyway, that means I get to use the open source Model through the WON DV.
+So that would be cool. And it's, I'm really excited to see what the image capabilities are of the open source.
+I'm going to analyze like frames of screenshots so I'm going to see if it's like any it might be trash.
+Yeah that's a test
+
+Attendees 1 16:56
+that's the point of Hackth.
+We just built whatever like we don't know the result.
+Yeah. We also don't know the result like I do are trying to get all the recordings but if the app doesn't work, then it's just gone.
+Yeah.
+
+
+clovanote.naver.com

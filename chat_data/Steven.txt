@@ -1,0 +1,181 @@
+﻿Steven
+2026.03.29 Sun AM 7:55 ・ 8Minutes 9seconds
+박세정
+
+
+Attendees 1 00:00
+By the way I'm 이재하. 
+Nice to meet you. I'm working at Apple.
+Yeah i work at chip design. Oh Cupertino.
+Are you also at?
+
+Attendees 2 00:14
+Hi, I'm Steven. I don't know why I work in Paris
+
+Attendees 1 00:16
+Okay work in Paris What do you mean by that Cooperino?
+You work in Cupertino? Oh we have several offices So I work near San Jose Yeah Yeah but we have that headquarter round building at the Cino yard.
+Also you flow from Paris
+
+Attendees 2 00:38
+Yeah I'm staying here for three months.
+
+Attendees 1 00:41
+Oh wow I see What do you do?
+What do you do for three months?
+Oh wow Yeah I think SF is really exciting city many things happening.
+So what do you do for work in Paris?
+
+Attendees 2 00:59
+I a software engineer,
+
+Attendees 1 01:01
+software engineering French startup I see.
+So are you interested in using deploying agents on the workflow
+
+Attendees 2 01:14
+they tested by using agents to accelerate development?
+
+Attendees 1 01:21
+I see I see Yeah it's working too well nowadays right right we can ship in one day
+
+Attendees 2 01:37
+For example today we are building a copy
+
+Attendees 2 01:46
+features. Oh wow it just works.
+
+Attendees 1 01:51
+Oh wow I see Do you have some new feature that GitHub doesn't like?
+
+Attendees 2 01:57
+Yeah that's the point. We have some AI stuff just for the
+
+Attendees 1 02:01
+oh I see I see. So what AI can reverage using this system
+
+Attendees 2 02:12
+What lacks in Gitab is the context.
+When you write code, you lose the context once you commit.
+We are trying to find a way to add the context to the commit.
+When you look at the relying code, you can associate the
+
+Attendees 1 02:35
+I see I recently made one small app named Git Chat.
+Yeah It's like so when we chat with the ChatGPT or Cloud, it is a linear conversation but sometimes we might want to branch at some point and driving the conversation in multiple directions.
+So Gid Chat it maintained the branches using GID engine and we visualize the floor so user can choose which branch to talk to.
+
+Attendees 2 03:13
+Are you a software and dinger team
+
+Attendees 1 03:15
+kind of kind of but I mostly buy code.
+
+Attendees 2 03:21
+You mean you never to it by hand
+
+Attendees 1 03:24
+reasonably No it's just I was cooking the clock
+
+Attendees 2 03:29
+What you doing before? Sorry What is your main activity?
+
+Attendees 1 03:34
+So we are building some AI tool for CHiP design engineer CHiP Yeah like A1 CHiP or port CHiP like the chips going into mac or iPhone we need to design for matching the performance and it's quite tedious job.
+Sometimes
+
+Attendees 2 03:57
+Apple silicon architecture really a game changer.
+It's a game changer but it completely anhates the competition.
+The M1 was a revolution.
+
+Attendees 1 04:15
+Yeah thank you. So I think we already owned the M4 right the risk M5, M5, M5, M5.
+Yeah and there are chips that would be coming year by year and hopefully by using AI we want to shipping things more often and having more performance games, something like that.
+
+Attendees 2 04:45
+The time is still legging behind me.
+
+Attendees 1 04:56
+They also tested the front end.
+What did they just open? Did they open the front end?
+
+Attendees 2 05:08
+I did all of this.
+
+Attendees 1 05:16
+Are you familiar with Hskel?
+Are you using? H?
+
+Attendees 2 05:18
+Yeah yeah the project is strongly diped functional
+
+Attendees 2 05:28
+a web framework with very little B.
+It's strongly typed so very strict recombination of
+
+Attendees 1 05:49
+anyway Thank you hopefully goes well goodh
+
+Attendees 2 05:53
+it's 60% done We would need a one more.
+
+Attendees 1 06:00
+Hopefully it can finish before it
+
+Attendees 2 06:04
+doing the same in parallel Maybe it will finish some time.
+
+Attendees 1 06:07
+Oh okay okay run the same thing but in a parallel
+
+Attendees 2 06:12
+only one pumpt three hours ago but he took the costume and the steering.
+
+Attendees 2 06:24
+You may get the quicker results.
+
+Attendees 1 06:28
+It would be interesting to compare the results.
+
+Attendees 2 06:39
+We have too many features May not have been the best ID.
+The list of features is a thousand lines The list of what the list of features is a thousand lines
+
+Attendees 1 06:54
+a thousand lines. Wow So did you put them in manually or how did you put them?
+
+Attendees 2 07:05
+We used the LLM to generate
+
+Attendees 1 07:08
+but you like describe these features one by one to LLM.
+
+Attendees 2 07:14
+It's features from Newton The main features of guitar
+
+Attendees 1 07:22
+Oh wow Oh wow Oh wow interesting
+
+Attendees 2 07:29
+it's crazy that
+
+Attendees 1 07:30
+it's really crazy.
+
+Attendees 2 07:31
+It just works. The scale is so strict that
+
+Attendees 2 07:40
+without LLM it would take six months to a team of 20 teams.
+And
+
+Attendees 3 07:49
+no okay
+
+Attendees 1 07:55
+Anyway Thank you. I will let you know how it goes.
+I will than.
+
+
+clovanote.naver.com

@@ -1,0 +1,247 @@
+﻿New note
+2026.03.29 Sun AM 6:44 ・ 12Minutes 37seconds
+이완희
+
+
+Attendees 1 00:20
+What are you guys working on are you in the same
+
+Attendees 2 00:23
+same team? Yeah we're working on some sort of like like agent collaboration sort of ideas.
+
+Attendees 3 00:31
+It's GitHub operations.
+
+Attendees 1 00:34
+Oh, I saw that there I mean, I saw that in the panel and I thought that, what would that be?
+I thought that that's interesting but I couldn't imagine what that's pretty interesting.
+
+Attendees 2 00:46
+We took some ideas inspired by the Molt book and also like it's like 5 am in Berlin time but yeah so we took some ideas like Notberg and you know, we sort of thought about like, you know, GitHub is a thing that's for, you know, people, you know but like 20 years ago it's like how can people collaborate with other people?
+And like, now like what possibly could agents collaborate with other agents?
+And you know, what does open source look like in that sort of world?
+
+Attendees 2 01:23
+You know, we're like, yeah let's just put out a crazy experiment you know, maybe there's not much sort of practical sort of ideas but you know, let's just, you know, put something out, put up some you know, crazy ideas and just see what ends up and maybe it's some interesting learnings maybe it's sort of, you know, a cool starting point for some actually serious applications.
+But we've got, let's just, you know, spin something up and give it a W ring.
+
+Attendees 1 01:48
+So the coding agents kind of gather together like, and then just talk about a bunch of cool.
+
+Attendees 2 01:57
+The idea is more like if I have my mob book, it's not my open draw instance it changed the name so many times if I have my open floor instance and it's like I want to make a speech to text little module to wrap some like to take a thing that isn't needatively supported li usually it has to go and look at the documentation, build a script etc and it's done that for my little setup and that's great that's fine
+
+Attendees 2 02:25
+but what would be even cooler is once it's done that once it's made its script if it could then autonomously just go and publish that to the internet, make that open source.
+And then what that means is whenever someone else's agent say, your sort of agent wants to do the same thing, it can first search on the line, see like what is available and it can see, ah, if someone else has solved the same problem, let me pull that down, let me use that.
+
+Attendees 2 02:47
+And then we're like how does then sort of the collaboration aspect work?
+And we're like what if we kind of do crazing like what if it's just open collaboration where we sort of skip things like Codeview and skip things like any form of PR something what if we can just let people let these agents just collaborate directly by sort of pushing their changes as they want
+
+Attendees 2 03:09
+and sort of like what sort of workflows could you possibly sort of come up with in that sort of scenario perhaps in its own state like there's obviously huge security issues there but you know, maybe there's some sort of interesting sort of outcomes that you could then build into a more sort of practical solution.
+
+Attendees 1 03:25
+I mean security is maybe a problem for a big company but for me if I want to write some code exactly I don't care much.
+So yeah I'm actually working on making an app so that I can connect people in here.
+I ask yeah so I'm actually trying to collect some information from people.
+Okay is it okay if I like you use the recording with you to put that into our app like our conversation
+
+Attendees 4 04:09
+sure
+
+Attendees 1 04:10
+yeah. And then like just to put information to our app what you're working on yeah so that we can find some people to connect.
+Would that the C
+
+Attendees 4 04:24
+as long as you're not trying to recreate me or something.
+
+Attendees 1 04:28
+No no, no, no and then we will delete everything right after the demo and no worries about that.
+So yeah so I'm Anhee and I'm working.
+I'm actually a PhD student at Stanford
+
+Attendees 2 04:43
+so awesome
+
+Attendees 1 04:44
+and I usually work on computer vision.
+But today I came here to just see people what's going on in the world and yeah and try to build something with these agents.
+Yeah yeah it's really cool I think.
+
+Attendees 2 05:01
+Yeah. I mean I've been sort of in the US I'm here for like two weeks so I'm doing some co-working with colleagues throughout here in San Francisco doing some conferences as well.
+I saw this on the calendar as like this is you know, like a really fun twist on like a hackathon and we can, you know, still going to talk to people and hang out rather than constantly just be sat on the computer the whole time because you know, we're just letting the thing run wild.
+
+Attendees 1 05:26
+Yeah that's the whole point.
+Yeah yeah you know, that's really cool.
+Yeah
+
+Attendees 2 05:30
+yeah so it's been fun to get to talk to a couple of people.
+
+Attendees 1 05:33
+How many times did you use the,
+
+Attendees 2 05:37
+I've yet to use the thingy really last night I was at like sort of one in the morning was desperately like getting my RUF loop sort of nailed down.
+So I sort of last night was like I want to just take something that's got a pretty good spec.
+So I took the original documentation for the BE programming language.
+It's a pretty small language as like I want you to build a compiler for the B programming
+
+Attendees 2 06:00
+and just sort of started testing out my routfe loop on that and I got pretty much 95% of the way through getting a B compiler that worked.
+Oh yeah so I was like, yeah with that sort of like test I was able to get a pretty good sort of route loop that you know, ties into a cron jump to make sure that it's keeping running if it like stalls out and stuff.
+
+Attendees 1 06:23
+That's really cool.
+
+Attendees 2 06:24
+I've just been like letting it cook away and you know, my only sort of signal that it's not gone completely wrong is that I keep getting these commits that are coming in.
+So yeah
+
+Attendees 1 06:35
+we build this commit. I mean, isn't it so cool?
+
+Attendees 2 06:37
+I mean this is awesome like in some regards it just terrifies me especially that it's decided to use my identity.
+You know, last night when I was setting it up, I didn't think to give it a different email to do the commits with.
+But yeah so it's got all sorts of where it's just like, you know, adding the features and yeah basically every two minutes there's a new commit up.
+
+Attendees 3 06:59
+Yeah it's crazy it's crazy.
+So yeah have you had the Lobster hat on yet?
+
+Attendees 1 07:07
+We use it once I mean, we ask you to build something I mean we're probably not very experienced as you using it and we ask it to build something and then it finished in like 10 minutes or something.
+And then the result was, doesn't seem to be successful like it was too short.
+
+Attendees 2 07:32
+We actually started off three different Ralph loops soo, had two different open core instances.
+I had my open core instance so we kind of had three shots for it to get it right and like only one of them is still running is still running.
+Yeah yeah it's doing some refinements or something.
+I'm not sure I'm just letting it do its thing and at some point we'll
+
+Attendees 5 07:56
+I'm really glad that yours is still going.
+Both of my are stuck. Yeah oh, really
+
+Attendees 1 08:02
+what happened? Why did?
+
+Attendees 3 08:05
+I don't know. We're like, you know, I think we're not supposed to check right I think we're supposed to especially computer software.
+Yeah so everybody has some kind of computer on.
+I'm curious.
+
+Attendees 1 08:19
+Oh, but you can I mean you can look at the dashboard because you need to check whether you want to use that or not right
+
+Attendees 2 08:28
+that's boring. We're just going to open it up after the end of like the four hours and
+
+Attendees 1 08:33
+there is a chance you can ask you need to get this hat.
+
+Attendees 3 08:41
+Yeah yeah you get penalty there's a penalty
+
+Attendees 1 08:44
+but I mean I did that so we already got the
+
+Attendees 2 08:50
+yeah no we're kind of having a bit of life so we don't really mind if it just fizzles our water.
+
+Attendees 1 08:59
+I guess that's what people are doing just checking to see whether they should use this or not.
+Okay for our team yeah that's why we,
+
+Attendees 2 09:09
+I've got the sort of like heartbeat that it's still making commits so presumably it's doing something.
+But you know, I don't want to sort of micromanage and steer it.
+
+Attendees 1 09:22
+Do you guys have LinkedIn?
+
+Attendees 2 09:24
+I do have the LinkedIn Yes
+
+Attendees 1 09:27
+maybe
+
+Attendees 2 09:35
+how do I do this? Get the QR code there we go.
+
+Attendees 1 09:38
+Okay
+
+Attendees 4 09:39
+what phone is that? By the way
+
+Attendees 1 09:44
+Samsung nice
+
+Attendees 2 09:49
+I'm thinking of getting the new iPhone when they come out in September.
+This thing is getting old at this points.
+
+Attendees 1 09:57
+Do you know what this is?
+
+Attendees 2 09:58
+I think there's like a like identity verification
+
+Attendees 4 10:04
+you can skip it.
+
+Attendees 1 10:08
+Oh this is a weird government issued ID.
+No I don't like that. I don't like that.
+
+Attendees 2 10:16
+I think Discord is now doing some sort of government ID for younger people, which is horrific.
+I think at some point we might need to figure out a give up the matrix server or something.
+Yeah VC has not been treating disc like time.
+What's the CCP that controls?
+Well, there is a third of ownership by 10 cents.
+So the CTP does have a good say in Discord as well.
+
+Attendees 1 10:44
+I should have sent this to you.
+I actually doing a recording for my app and I'll delete this recording right after this event.
+So please bear with me. I mean, I'm just using this to make an AD connecting finding potential links,
+
+Attendees 6 11:15
+Reed conversation.
+
+Attendees 1 11:16
+Yeah yeah yeah and then I just put it into the LLM and we'll make a knowledge graph.
+Who is doing what
+
+Attendees 6 11:26
+How do you connect the speaker to the transcript zone?
+It doesn't have the
+
+Attendees 1 11:32
+Oh, I right away there is a so we give it to some Model that distinguish people and change it to transcript and I basically put the name there.
+I'm remembering you guys' name.
+I'll make sure it's deleted after this.
+Yeah that's cool. So we actually ask for member list but they didn't give us.
+So I'm just trying to gather some information for demo purpose.
+
+Attendees 6 12:08
+This is your project now
+
+Attendees 3 12:12
+that's fun That's cool
+
+Attendees 1 12:14
+Anyway Thank you Thank you so much.
+Good to you. Yeah nice meeting you.
+Yeah. Nice to meet you.
+
+
+clovanote.naver.com

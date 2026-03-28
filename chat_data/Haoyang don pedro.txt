@@ -1,0 +1,330 @@
+﻿New note
+2026.03.29 Sun AM 6:22 ・ 14Minutes 42seconds
+이완희
+
+
+Attendees 1 00:02
+No this is actually my friend's company.
+Yeah so okay can you introduce yourself again?
+So that for this your name I just speak English.
+Yeah yeah I mean so for this recording I think it should know the names again.
+
+Attendees 2 00:25
+Yeah yeah so yeah I'm ho young and what do you want me to say?
+I mean like I'm visiting San Fran just right now and I'm just building this self-healing JavaScript runtime.
+
+Attendees 1 00:42
+Mm Cool Cool and what about you?
+
+Attendees 3 00:45
+I just talk about like stuff I'm doing here
+
+Attendees 1 00:48
+no no whatever I mean this is just for fun fun demo.
+
+Attendees 2 00:53
+Can I give you a suggestion rather than doing this I think you should just record and then we just check normally instead of saying I introduc
+
+Attendees 1 01:05
+Oh yes
+
+Attendees 2 01:06
+just record and then we just have a normal check.
+
+Attendees 1 01:09
+Oh yeah That's sorry. I think I made it.
+I'm so sorry for that. I think I made it offer.
+This is my first trial of interview.
+So I'm so sorry. Just maybe I'll just leave it here.
+Yeah we can just chat. So I'm hi and I a KC student at Stanford.
+I usually work on computer vision and like W Model.
+So today here I just came here to see these cool people and like I thought that this event is so cool.
+I just wanted to try making something.
+
+Attendees 1 01:53
+Yeah yeah PhD son and ST working on this staff.
+How many people in your team?
+We three three Yeah Oh this is our
+
+Attendees 4 02:09
+hello Nice to meet you. I'm Jae
+
+Attendees 4 02:15
+Oh wow
+
+Attendees 5 02:19
+yesterday I bought
+
+Attendees 2 02:35
+Do you guys brothers?
+
+Attendees 6 02:37
+Oh yeah
+
+Attendees 2 02:42
+because the three of you could only be brothers to take.
+
+Attendees 2 02:49
+Well, your app should have a way for us to upload photos.
+
+Attendees 1 03:02
+Yes same thing but this is like very popular like 30% of Koreans.
+The other three
+
+Attendees 3 03:15
+our friend we met like three days ago.
+He's also Kne. Yeah.
+
+Attendees 2 03:29
+So you also sent her PhD doing summer things to him.
+
+Attendees 4 03:33
+I finished my PhD at Cartech the LA area and I came out here working at Apple Apple.
+Yeah Silicon. So I'm in the cheap design team and we are trying to use AI for cheap design trying to integrate LL agents to run the simulations.
+
+Attendees 2 04:01
+Did you study CHiP design in?
+
+Attendees 4 04:03
+No actually I just totally different things like physics but I made some transition.
+
+Attendees 2 04:15
+How do you find AI and check?
+Is it helping?
+
+Attendees 4 04:20
+Yeah I think it's quite interesting.
+It's not too easy so not that boring but not too complicated.
+AI on. So it's right amount of the product.
+
+Attendees 2 04:32
+What does the AI do with that process?
+
+Attendees 4 04:35
+LI for example, you can run the simulation, check the results and suggest like what would be good to do next so we can automatize this.
+
+Attendees 2 04:45
+Are you saying it's kind of quite AI driven now like you not yet
+
+Attendees 4 04:51
+we are exploring the possibility.
+
+Attendees 1 04:56
+What are you doing? Are you in the same team?
+
+Attendees 2 05:04
+So I'm building like a self-recovery JavaScript run time.
+So basically you have some JavaScript code there's a bug in it you run it, press it but you put
+
+Attendees 1 05:18
+instead of we copy paste every time we just make it run.
+
+Attendees 2 05:22
+Yeah so catch the error and then I will send it to AI to fix the code and then catch it before the user sees the error.
+
+Attendees 4 05:29
+So it's just fully automatized processing.
+
+Attendees 2 05:33
+It's not about fixing the bug at the back end it's about replacing it.
+I ren
+
+Attendees 2 05:47
+and then it can ve the era and say we've caught this 500 times here is probably the flex but we've stopped it.
+You know, the user from seeing the era.
+
+Attendees 1 05:59
+That's cool that's cool and what are you building?
+
+Attendees 3 06:05
+Our product is called VIP Trip, Vipe Trip, Vipe trip you know, like vipe coding you know, the guys just wants to code but it's just not exactly specialist or so want to take so much time and stuff.
+So when you want to have a trip travel, you know, maybe sometimes you just want to relax, spend some money.
+That's really nice. That's actually what I'm doing right now.
+Okay you know so it's just do a personalized travel agent.
+Oh, personalized travel.
+
+Attendees 3 06:40
+He's a music producer. Our first project is to focus on music, the music side.
+So you just link your Spotify and she's like this guy is like your favorite artist.
+It searches for their concerts next to you, their shows and stuff and see that you're at California right now these guys are going to play at Santa Clara maybe five days from now.
+So you should take this route and it books your hotel, gets you a rent car, no five tickets and all
+
+Attendees 1 07:16
+it doesn't work Can I use it?
+
+Attendees 3 07:19
+We hope so we hope it works we don't know yet you know and you know, that's the first step because the big theme is to use it for all your hobbies.
+So you say, oh yeah yeah I spend like three months in California.
+I really enjoy Chinese food.
+I like Yono Messi I like Libron James.
+I like hockey and surfing.
+And put your spot for your Instagram did you say
+
+Attendees 7 07:48
+nice to meet you nice to meet you?
+My name is Bring Nice to meet one.
+
+Attendees 3 07:58
+So it will just do your host catch you say, oh yeah this your favorite music musician will play in this place and Messy will play in this other place.
+This day the weather will be good to serve at.
+I don't know any California beach but this day it books your flight tickets You are concert shows to your hotel, rent your car and do anything for you.
+So you just got to relax.
+
+Attendees 4 08:29
+Can I also do one feature request?
+When I was traveling I always thinking about what would be the best music I can hear now because when I walked like you might want to get recommendation of what kind of ambience music I want to hear or maybe podcast podcasts relevant to the
+
+Attendees 8 08:51
+yeah DJ personal DJ
+
+Attendees 3 08:58
+Yeah he's our DJ. We were very he write a Tesla he's always the DJ.
+Now this song would be good.
+
+Attendees 2 09:09
+What's you done? What are you working on?
+
+Attendees 9 09:13
+Company get people jobs
+
+Attendees 9 09:22
+beca I come to SF for a week just to meet people like I'm usually in between Sf, Miami, New York like those two cities.
+I'm really interest actually because I'm trying to, I have to scale my sales team.
+I either have to hire more salespeople like human beings to take the calls or I have to get like voice agents to do that call.
+Very excited by voice agents.
+Last year, I automated all of the go to market with all of our marketing sales except voice call.
+
+Attendees 9 09:50
+Cool so if I can just automate the voice call, that means I have a full stack end-to-end or sales process that's fully done by software which I think would be really interesting.
+
+Attendees 2 09:58
+This is to help your, what is your company?
+
+Attendees 9 10:00
+We get people's jobs but I'm lily voice AI because I want to build a human being effectively for sales goals as opposed to the scale of my sales team
+
+Attendees 2 10:11
+and your product time like AI drilling or not
+
+Attendees 9 10:17
+our product I mean we've been in the market for four and a half years.
+The back end now has quite a bit of AI but we didn't necessarily start we just built have more AI recently.
+So a REC company YEAHC company effectively.
+
+Attendees 2 10:29
+Yeah I'm going to talk to you afterwards because I'm trying to build an Autonomous AI startup which involves automating.
+
+Attendees 9 10:39
+I'm happy to show you our marketing is fully automated right now it's just automating sales just the that's much more complex than a problem.
+
+Attendees 2 10:50
+Sure sure and you still trying to automate the
+
+Attendees 9 10:54
+just before imagine the customer experience right now is like you get an email from my company and the email says, hey, like Pedro are you looking for a job?
+And Pedro goes yes and then when Pedro says yes, an AI Robot with response Pedro be like great Check out our website.
+If you go to the website, you fill in a form if you qualify for a call, then you get a call.
+You get a scheduled consult with the sales team.
+That scheduled consult is done by human beings.
+I want that to be done by AI
+
+Attendees 9 11:19
+and for a bunch of different reasons like AI will follow instructions for the human beings do like a big thing with scale in sales teams follow the script AI HMAN beings don't follow the script they have all theses, all things.
+So I'm really set about the idea of,
+
+Attendees 2 11:30
+have you found any good solutions here?
+
+Attendees 9 11:33
+I'm very confident to be I've been doing this for a week and like one week of work I have like this it's all perfect but I have this agent which doesn't sound like a fucking agent.
+It sounds like a kind of works it's almost there.
+It's like what's great is I have so I clones a French du's voice.
+He thought to do that. Most people who do AI agents flow like like an American right like the Sierri voice my guys in front of French Duke he's a French lecture
+
+Attendees 9 12:02
+because then also the latency issues just assumes he's in France.
+If the agent says something stupid, then you're just like, oh, it's because he's a French person you know what I mean I, so it's great but it's, he's great and he opens up everything.
+Call hello Pedro it's good to meet you.
+Thanks for scheduling them.
+By the way, it's background noise.
+It's because I'm in Paris I'm in the train station and there's a shift of background noise.
+I'm basically trying to distract people from like,
+
+Attendees 9 12:32
+you know what I mean and then he runs the sales golf and it's been very fun.
+It's been very fun, very interesting.
+I'm very confident he's been doing very well.
+
+Attendees 9 12:47
+Human beings are flawed.
+They take sick days they don't listen.
+There's a bunch of problems doing human beings.
+So like, I'm like, yes well AI fucked off my calls.
+Yes he spoke Chinese have been call yesterday but I still think
+
+Attendees 9 13:07
+I'm like, what the fuck I was like I was like, what the fuck are you saying?
+You' was like, sorry I'm like no you can't do this something else.
+So that's the change the profit
+
+Attendees 4 13:18
+by the way we should have noticed.
+
+Attendees 1 13:21
+Oh yeah this is we are recording.
+
+Attendees 9 13:25
+Oh, that's funny. I don't care.
+
+Attendees 1 13:27
+I mean it'll be deleted after three hours because you know,
+
+Attendees 9 13:32
+you can BroadCast. I think it's hilarious.
+By the way, if people are listening if you can actually build a voice AI agent, you should reach out to me.
+
+Attendees 9 13:48
+I've built like an MVP in a week and I want somebody to make it perfect.
+It's like still like 805%ile but yeah
+
+Attendees 1 13:55
+yeah so we'll try to find you some.
+
+Attendees 9 13:59
+I'm being serious because I think
+
+Attendees 2 14:01
+that's what I'm trying to.
+
+Attendees 1 14:03
+Yes that's why we
+
+Attendees 9 14:04
+technology is there but you have to artistically work and like attack it you know what I mean?
+You'll see very aggressive to make it work because it's not easy to make it work.
+It's not perfect like I have to make it French You know what I mean?
+Like I have to think how the F
+
+Attendees 2 14:18
+ideally it doesn't have to do that.
+
+Attendees 9 14:19
+ideally you have to do backflips right now the technology it's not good enough The technology' is not quite there.
+So to I'm happy to get and thank you so much.
+You build this.
+
+Attendees 2 14:31
+I think there's a lot right now
+
+Attendees 9 14:33
+I'll show you what I built if you can improve what I built.
+I'm very interested.
+
+Attendees 2 14:36
+Do you have a handle?
+
+Attendees 9 14:39
+There's a massive Let's just do numbers for there's a massive market.
+
+
+clovanote.naver.com
