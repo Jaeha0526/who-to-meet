@@ -146,10 +146,10 @@ export default function ForceGraph({
       ctx.shadowBlur = 0;
 
       // Label — always show for person nodes at reasonable zoom
+      const labelFontSize = isHovered || isHighlighted
+        ? Math.max(13 / globalScale, 4)
+        : fontSize;
       if (isPerson && !isDimmed && (globalScale > 0.5 || isHighlighted || isHovered)) {
-        const labelFontSize = isHovered || isHighlighted
-          ? Math.max(13 / globalScale, 4)
-          : fontSize;
         ctx.font = `${isHighlighted || isHovered ? "600 " : "400 "}${labelFontSize}px -apple-system, system-ui, sans-serif`;
         ctx.textAlign = "center";
         ctx.textBaseline = "top";
