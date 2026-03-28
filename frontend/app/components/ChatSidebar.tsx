@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { api, ChatMessage, Person } from "../lib/api";
 
 type Props = {
@@ -38,13 +38,17 @@ export default function ChatSidebar({
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const abortRef = useRef<AbortController | null>(null);
 
   // Persist chat history to localStorage
   useEffect(() => {
     if (typeof window !== "undefined") {
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
-      } catch {}
+      } catch (e) {
+        // localStorage full or unavailable - ignore gracefully
+        console.warn("Failed to save chat history:", e);
+      }
     }
   }, [messages]);
 
@@ -54,12 +58,23 @@ export default function ChatSidebar({
     }
   }, [messages]);
 
-  const send = async () => {
+  // Abort in-flight request on unmount
+  useEffect(() => {
+    return () => {
+      abortRef.current?.abort();
+    };
+  }, []);
+
+  const send = useCallback(async () => {
     if (!input.trim() || loading) return;
     const msg = input.trim();
     setInput("");
     setMessages((prev) => [...prev, { role: "user", content: msg }]);
     setLoading(true);
+
+    // Abort previous request if any
+    abortRef.current?.abort();
+    abortRef.current = new AbortController();
 
     try {
       const res = await api.chat(
@@ -81,6 +96,7 @@ export default function ChatSidebar({
         onHighlight(res.graph_highlights);
       }
     } catch (e: any) {
+      if (e.name === "AbortError") return;
       setMessages((prev) => [
         ...prev,
         { role: "assistant", content: `Error: ${e.message}` },
@@ -88,12 +104,12 @@ export default function ChatSidebar({
     } finally {
       setLoading(false);
     }
-  };
+  }, [input, loading, selectedPerson?.person_id, updateKnowledge, onHighlight]);
 
   if (!isOpen) return null;
 
   return (
-    <div className="slide-in fixed right-0 top-14 bottom-0 w-[420px] bg-[#12121a] border-l border-[#2a2a3e] flex flex-col z-50">
+    <div className="slide-in fixed right-0 top-14 bottom-0 w-[420px] bg-[#12121a] border-l border-[#2a2a3e] flex flex-col z-40">
       {/* Header */}
       <div className="p-4 border-b border-[#2a2a3e] flex items-center justify-between">
         <div className="flex items-center gap-3">
@@ -129,7 +145,12 @@ export default function ChatSidebar({
           value={selectedPerson?.person_id || ""}
           onChange={(e) => {
             const p = persons.find((p) => p.person_id === e.target.value);
-            if (p) onSelectPerson(p);
+            if (p) {
+              onSelectPerson(p);
+              // Clear chat context entirely when switching person
+              setMessages([]);
+              onHighlight([]);
+            }
           }}
           className="flex-1 bg-[#1a1a2e] text-sm border border-[#2a2a3e] rounded px-2 py-1.5 text-[#e0e0e8] outline-none focus:border-[#6366f1]"
         >

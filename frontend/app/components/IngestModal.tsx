@@ -23,11 +23,11 @@ export default function IngestModal({ isOpen, onClose, onIngested }: Props) {
 
   if (!isOpen) return null;
 
-  const handlePaste = async () => {
+  const handlePaste = async (skipDuplicateCheck = false) => {
     if (!name.trim() || !bioText.trim()) return;
 
     // Check for duplicate first (unless user already confirmed)
-    if (!duplicateWarning) {
+    if (!skipDuplicateCheck && !duplicateWarning) {
       try {
         const check = await api.checkDuplicate(name.trim());
         if (check.duplicate) {
@@ -111,7 +111,7 @@ export default function IngestModal({ isOpen, onClose, onIngested }: Props) {
           {tabs.map((t) => (
             <button
               key={t.key}
-              onClick={() => setTab(t.key)}
+              onClick={() => { setTab(t.key); setResult(""); setDuplicateWarning(null); }}
               className={`flex-1 py-2 text-sm transition-colors ${
                 tab === t.key
                   ? "text-[#6366f1] border-b-2 border-[#6366f1]"
@@ -150,7 +150,7 @@ export default function IngestModal({ isOpen, onClose, onIngested }: Props) {
                       onClick={() => {
                         // Proceed with update (will merge with existing)
                         setDuplicateWarning(null);
-                        handlePaste();
+                        handlePaste(true);
                       }}
                       className="bg-amber-600 hover:bg-amber-700 text-white rounded-lg px-3 py-1.5 text-sm flex-1"
                     >
@@ -170,7 +170,7 @@ export default function IngestModal({ isOpen, onClose, onIngested }: Props) {
               )}
               {!duplicateWarning && (
                 <button
-                  onClick={handlePaste}
+                  onClick={() => handlePaste(false)}
                   disabled={loading || !name.trim() || !bioText.trim()}
                   className="bg-[#6366f1] hover:bg-[#4f46e5] disabled:opacity-50 text-white rounded-lg px-4 py-2 text-sm w-full"
                 >
@@ -232,7 +232,7 @@ export default function IngestModal({ isOpen, onClose, onIngested }: Props) {
           {result && (
             <p
               className={`text-sm ${
-                result.startsWith("✓") ? "text-emerald-400" : "text-red-400"
+                result.startsWith("✓") ? "text-emerald-400" : result.startsWith("⚠") ? "text-amber-400" : "text-red-400"
               }`}
             >
               {result}

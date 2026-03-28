@@ -36,7 +36,7 @@ export default function NodeDetail({ node, edge, onClose }: Props) {
   };
 
   return (
-    <div className="fade-in fixed left-4 bottom-4 w-[380px] max-h-[60vh] bg-[#12121a]/95 backdrop-blur-md border border-[#2a2a3e] rounded-xl overflow-hidden shadow-2xl z-40">
+    <div className="fade-in fixed left-4 bottom-4 w-[380px] max-h-[60vh] bg-[#12121a]/95 backdrop-blur-md border border-[#2a2a3e] rounded-xl overflow-hidden shadow-2xl z-30">
       <div className="p-4 border-b border-[#2a2a3e] flex justify-between items-center">
         <h3 className="font-medium text-sm">
           {node ? (node.type === "person" ? "👤 " : "💬 ") : "🔗 "}
@@ -128,11 +128,13 @@ export default function NodeDetail({ node, edge, onClose }: Props) {
         {edge && (
           <>
             <div className="flex items-center gap-2">
-              <Tag
-                text={edge.edge_type.replace(/_/g, " ")}
-                color={edgeTypeColor(edge.edge_type)}
-              />
-              {(edge as any).relationship_type && (
+              {edge.edge_type && (
+                <Tag
+                  text={edge.edge_type.replace(/_/g, " ")}
+                  color={edgeTypeColor(edge.edge_type)}
+                />
+              )}
+              {(edge as any)?.relationship_type && (
                 <Tag
                   text={(edge as any).relationship_type.replace(/_/g, " ")}
                   color="pink"
@@ -187,7 +189,7 @@ export default function NodeDetail({ node, edge, onClose }: Props) {
                 </p>
               </div>
             )}
-            {edge.match_category && (
+            {edge?.match_category && (
               <div>
                 <Tag
                   text={edge.match_category.replace(/_/g, " ")}

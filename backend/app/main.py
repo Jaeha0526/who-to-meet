@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 import json
+import uuid
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
@@ -33,10 +34,10 @@ app = FastAPI(title="Who-to-Meet", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"],
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["Content-Type"],
 )
 
 
@@ -67,7 +68,9 @@ async def ingest_transcript(req: IngestTranscriptRequest):
 
     created_persons = []
     for p_data in extracted.get("participants", []):
-        name = p_data.get("name", p_data.get("label", "Unknown"))
+        name = p_data.get("name", p_data.get("label", ""))
+        if not name or name.lower() in ("unknown", ""):
+            name = f"Participant-{str(uuid.uuid4())[:6]}"
         # Check if person already exists
         existing = graph.find_person_by_name(name)
         if existing:
@@ -188,7 +191,9 @@ async def ingest_batch(req: BatchImportRequest):
     """Batch import participants from CSV/JSON data."""
     results = []
     for p_data in req.participants:
-        name = p_data.get("name", "Unknown")
+        name = p_data.get("name", "")
+        if not name or name.lower() in ("unknown", ""):
+            name = f"Participant-{str(uuid.uuid4())[:6]}"
         bio = p_data.get("bio", "") or p_data.get("linkedin", "") or p_data.get("description", "")
 
         # Only call LLM if structured data not provided
@@ -365,15 +370,19 @@ async def chat(req: ChatRequest):
                     )
                     graph.add_edge(edge)
 
+            await graph.save_to_sqlite()  # persist recommendation edges
+
             # Compute graph paths for each recommendation
             all_paths = []
+            requester = graph.get_person(req.person_id)
+            requester_name = requester.name if requester else req.person_id
             for rec in recs:
                 pid = rec.get("person_id", "")
                 if pid and req.person_id:
                     paths = graph.find_paths_between(req.person_id, pid)
                     for p in paths:
                         all_paths.append({
-                            "from_name": graph.get_person(req.person_id).name if graph.get_person(req.person_id) else req.person_id,
+                            "from_name": requester_name,
                             "to_name": rec.get("person_name", pid),
                             "steps": p["steps"],
                         })
@@ -455,6 +464,7 @@ async def get_fun_matches():
                     )
                     graph.add_edge(edge)
 
+        await graph.save_to_sqlite()  # persist match edges
         return {"categories": categories}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Match generation error: {str(e)}")

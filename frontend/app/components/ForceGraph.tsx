@@ -225,6 +225,19 @@ export default function ForceGraph({
     [hoveredNode, hoveredLink]
   );
 
+  // Apply low repulsion force and boundary constraints for stable clicking
+  useEffect(() => {
+    if (fgRef.current) {
+      const fg = fgRef.current;
+      // Low repulsion force for tighter, more stable layout
+      fg.d3Force("charge")?.strength(-30).distanceMax(250);
+      // Shorter link distance for compactness
+      fg.d3Force("link")?.distance(60);
+      // Center gravity to keep nodes in view
+      fg.d3Force("center")?.strength(0.05);
+    }
+  }, [nodes.length]);
+
   return (
     <ForceGraph2D
       ref={fgRef}
@@ -238,14 +251,14 @@ export default function ForceGraph({
       onNodeHover={(node: any) => setHoveredNode(node?.id || null)}
       onLinkHover={(link: any) => setHoveredLink(link || null)}
       backgroundColor="#0a0a0f"
-      cooldownTicks={120}
+      cooldownTicks={200}
       nodeRelSize={7}
       linkDirectionalParticles={0}
-      d3AlphaDecay={0.015}
-      d3VelocityDecay={0.35}
+      d3AlphaDecay={0.03}
+      d3VelocityDecay={0.5}
       d3AlphaMin={0.001}
       enableNodeDrag={true}
-      warmupTicks={30}
+      warmupTicks={50}
       minZoom={0.3}
       maxZoom={8}
     />

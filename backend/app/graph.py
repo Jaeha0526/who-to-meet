@@ -1,6 +1,7 @@
 """In-memory knowledge graph using NetworkX with SQLite persistence."""
 
 from __future__ import annotations
+import asyncio
 import json
 import aiosqlite
 import networkx as nx
@@ -17,6 +18,7 @@ class KnowledgeGraph:
         self.G = nx.Graph()
         self.persons: dict[str, Person] = {}
         self.conversations: dict[str, Conversation] = {}
+        self._save_lock = asyncio.Lock()
 
     # ── Person operations ────────────────────────────────────────
 
@@ -47,23 +49,28 @@ class KnowledgeGraph:
                 else:
                     setattr(p, key, val)
         # Update graph node attrs
-        self.G.nodes[person_id].update({
-            "interests": p.interests,
-            "skills": p.skills,
-            "traits": p.traits,
-            "goals": p.goals,
-            "bio": p.bio,
-            "name": p.name,
-        })
+        if person_id in self.G:
+            self.G.nodes[person_id].update({
+                "interests": p.interests,
+                "skills": p.skills,
+                "traits": p.traits,
+                "goals": p.goals,
+                "bio": p.bio,
+                "name": p.name,
+            })
         return p
 
     def get_person(self, person_id: str) -> Person | None:
+        if not person_id:
+            return None
         return self.persons.get(person_id)
 
     def get_all_persons(self) -> list[Person]:
         return list(self.persons.values())
 
     def find_person_by_name(self, name: str) -> Person | None:
+        if not name:
+            return None
         name_lower = name.lower().strip()
         for p in self.persons.values():
             if p.name.lower().strip() == name_lower:
@@ -94,16 +101,40 @@ class KnowledgeGraph:
     # ── Edge operations ──────────────────────────────────────────
 
     def add_edge(self, edge: Edge):
-        self.G.add_edge(
-            edge.source, edge.target,
-            edge_type=edge.edge_type,
-            relationship_type=edge.relationship_type,
-            reasoning=edge.reasoning,
-            strength=edge.strength,
-            match_category=edge.match_category,
-            shared_themes=edge.shared_themes,
-            conversation_starter=edge.conversation_starter,
-        )
+        # Self-loop prevention
+        if edge.source == edge.target:
+            return
+
+        # Edge merge: if edge already exists, merge rather than overwrite
+        if self.G.has_edge(edge.source, edge.target):
+            existing = self.G.edges[edge.source, edge.target]
+            # Keep the stronger edge, merge themes
+            new_strength = max(existing.get("strength", 0), edge.strength)
+            existing_themes = existing.get("shared_themes", []) or []
+            merged_themes = list(dict.fromkeys(existing_themes + (edge.shared_themes or [])))
+            # Prefer non-empty reasoning
+            reasoning = edge.reasoning or existing.get("reasoning", "")
+            self.G.edges[edge.source, edge.target].update({
+                "strength": new_strength,
+                "shared_themes": merged_themes,
+                "reasoning": reasoning,
+                # Keep the more specific edge type
+                "edge_type": edge.edge_type or existing.get("edge_type", ""),
+                "relationship_type": edge.relationship_type or existing.get("relationship_type", ""),
+                "match_category": edge.match_category or existing.get("match_category", ""),
+                "conversation_starter": edge.conversation_starter or existing.get("conversation_starter", ""),
+            })
+        else:
+            self.G.add_edge(
+                edge.source, edge.target,
+                edge_type=edge.edge_type,
+                relationship_type=edge.relationship_type,
+                reasoning=edge.reasoning,
+                strength=edge.strength,
+                match_category=edge.match_category,
+                shared_themes=edge.shared_themes,
+                conversation_starter=edge.conversation_starter,
+            )
 
     def get_edges_for_person(self, person_id: str) -> list[dict]:
         edges = []
@@ -141,6 +172,8 @@ class KnowledgeGraph:
         """Find shortest paths between two persons, returning edge details along the way."""
         if source_id not in self.G or target_id not in self.G:
             return []
+        if source_id == target_id:
+            return []
         paths_info = []
         try:
             for path in nx.all_shortest_paths(self.G, source_id, target_id):
@@ -176,6 +209,7 @@ class KnowledgeGraph:
             return ""
         lines = [
             f"Name: {p.name}",
+            f"Person ID: {p.person_id}",
             f"Bio: {p.bio}" if p.bio else "",
             f"Interests: {', '.join(p.interests)}" if p.interests else "",
             f"Skills: {', '.join(p.skills)}" if p.skills else "",
@@ -199,27 +233,31 @@ class KnowledgeGraph:
     # ── Persistence ──────────────────────────────────────────────
 
     async def save_to_sqlite(self):
-        async with aiosqlite.connect(str(DB_PATH)) as db:
-            await db.execute("""
-                CREATE TABLE IF NOT EXISTS graph_state (
-                    id INTEGER PRIMARY KEY CHECK (id = 1),
-                    persons_json TEXT,
-                    conversations_json TEXT,
-                    edges_json TEXT
-                )
-            """)
-            persons_json = json.dumps({k: v.model_dump() for k, v in self.persons.items()})
-            convs_json = json.dumps({k: v.model_dump() for k, v in self.conversations.items()})
-            edges = []
-            for u, v, data in self.G.edges(data=True):
-                edges.append({"source": u, "target": v, **data})
-            edges_json = json.dumps(edges)
+        async with self._save_lock:
+            try:
+                async with aiosqlite.connect(str(DB_PATH)) as db:
+                    await db.execute("""
+                        CREATE TABLE IF NOT EXISTS graph_state (
+                            id INTEGER PRIMARY KEY CHECK (id = 1),
+                            persons_json TEXT,
+                            conversations_json TEXT,
+                            edges_json TEXT
+                        )
+                    """)
+                    persons_json = json.dumps({k: v.model_dump() for k, v in self.persons.items()})
+                    convs_json = json.dumps({k: v.model_dump() for k, v in self.conversations.items()})
+                    edges = []
+                    for u, v, data in self.G.edges(data=True):
+                        edges.append({"source": u, "target": v, **data})
+                    edges_json = json.dumps(edges)
 
-            await db.execute("""
-                INSERT OR REPLACE INTO graph_state (id, persons_json, conversations_json, edges_json)
-                VALUES (1, ?, ?, ?)
-            """, (persons_json, convs_json, edges_json))
-            await db.commit()
+                    await db.execute("""
+                        INSERT OR REPLACE INTO graph_state (id, persons_json, conversations_json, edges_json)
+                        VALUES (1, ?, ?, ?)
+                    """, (persons_json, convs_json, edges_json))
+                    await db.commit()
+            except Exception as e:
+                print(f"ERROR saving to SQLite: {e}")
 
     async def load_from_sqlite(self) -> bool:
         if not DB_PATH.exists():
@@ -231,32 +269,64 @@ class KnowledgeGraph:
                 if not row:
                     return False
 
-                persons_data = json.loads(row[0])
-                convs_data = json.loads(row[1])
-                edges_data = json.loads(row[2])
+                # Partial load safety: load each section independently
+                persons_data = {}
+                convs_data = {}
+                edges_data = []
+
+                try:
+                    persons_data = json.loads(row[0]) if row[0] else {}
+                except (json.JSONDecodeError, TypeError) as e:
+                    print(f"WARNING: Failed to parse persons_json: {e}")
+
+                try:
+                    convs_data = json.loads(row[1]) if row[1] else {}
+                except (json.JSONDecodeError, TypeError) as e:
+                    print(f"WARNING: Failed to parse conversations_json: {e}")
+
+                try:
+                    edges_data = json.loads(row[2]) if row[2] else []
+                except (json.JSONDecodeError, TypeError) as e:
+                    print(f"WARNING: Failed to parse edges_json: {e}")
 
                 for pid, pdata in persons_data.items():
-                    person = Person(**pdata)
-                    self.add_person(person)
+                    try:
+                        person = Person(**pdata)
+                        self.add_person(person)
+                    except Exception as e:
+                        print(f"WARNING: Skipping person {pid}: {e}")
 
                 for cid, cdata in convs_data.items():
-                    conv = Conversation(**cdata)
-                    self.add_conversation(conv)
+                    try:
+                        conv = Conversation(**cdata)
+                        self.add_conversation(conv)
+                    except Exception as e:
+                        print(f"WARNING: Skipping conversation {cid}: {e}")
 
                 for edata in edges_data:
-                    if edata.get("edge_type") != "participated_in":
-                        self.G.add_edge(
-                            edata["source"], edata["target"],
-                            edge_type=edata.get("edge_type", ""),
-                            relationship_type=edata.get("relationship_type", ""),
-                            reasoning=edata.get("reasoning", ""),
-                            strength=edata.get("strength", 0.5),
-                            match_category=edata.get("match_category", ""),
-                            shared_themes=edata.get("shared_themes", []),
-                            conversation_starter=edata.get("conversation_starter", ""),
-                        )
+                    try:
+                        if edata.get("edge_type") != "participated_in":
+                            source = edata.get("source", "")
+                            target = edata.get("target", "")
+                            if source and target and source != target:
+                                self.G.add_edge(
+                                    source, target,
+                                    edge_type=edata.get("edge_type", ""),
+                                    relationship_type=edata.get("relationship_type", ""),
+                                    reasoning=edata.get("reasoning", ""),
+                                    strength=edata.get("strength", 0.5),
+                                    match_category=edata.get("match_category", ""),
+                                    shared_themes=edata.get("shared_themes", []),
+                                    conversation_starter=edata.get("conversation_starter", ""),
+                                )
+                    except Exception as e:
+                        print(f"WARNING: Skipping edge: {e}")
+
                 return True
-        except Exception:
+        except Exception as e:
+            import traceback
+            print(f"ERROR loading from SQLite: {e}")
+            traceback.print_exc()
             return False
 
 

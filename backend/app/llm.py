@@ -10,12 +10,33 @@ load_dotenv(os.path.join(os.path.dirname(__file__), '..', '..', '.env'))
 
 _api_key = os.getenv("OPENAI_API_KEY", "")
 client = AsyncOpenAI(api_key=_api_key) if _api_key and not _api_key.startswith("your-") else None
-MODEL = "o3"  # upgraded reasoning model
+MODEL_CHAIN = ["o3", "o3-mini", "gpt-4o"]  # fallback chain
 
 
 def _check_client():
     if client is None:
         raise RuntimeError("OpenAI API key not configured. Add OPENAI_API_KEY to .env file.")
+
+
+async def _llm_call(messages: list[dict], response_format: dict | None = None) -> str:
+    """Call OpenAI with model fallback: o3 -> o3-mini -> gpt-4o."""
+    _check_client()
+    last_error = None
+    for model in MODEL_CHAIN:
+        try:
+            kwargs: dict = {
+                "model": model,
+                "messages": messages,
+            }
+            if response_format:
+                kwargs["response_format"] = response_format
+            response = await client.chat.completions.create(**kwargs)
+            return response.choices[0].message.content
+        except Exception as e:
+            last_error = e
+            print(f"Model {model} failed: {e}, trying next...")
+            continue
+    raise last_error or RuntimeError("All models failed")
 
 
 async def extract_persons_from_transcript(
@@ -33,8 +54,13 @@ The transcript may be in Korean, English, or mixed. Extract information about ea
 
 {mapping_note}
 
+IMPORTANT: Look carefully in the conversation content for real names. People often introduce themselves
+("I'm John", "My name is Sarah", "저는 민수입니다", "제 이름은...") or refer to each other by name
+("Hey David, what do you think?", "민수씨는..."). If a real name is found anywhere in the text for
+a participant, use that real name instead of the label (like "Attendees 1" or "Speaker A").
+
 For each participant found, extract:
-- name: Their real name if mentioned, or use the mapping provided, or use the label (e.g. "Attendees 1")
+- name: Their real name extracted from conversation content. Look for self-introductions, others addressing them by name, signatures, or any mention of their real name. Fall back to the participant_mapping if provided, or the label (e.g. "Attendees 1") only as a last resort.
 - interests: Specific topics, hobbies, or areas they show interest in (be specific, not vague)
 - skills: Technical or professional skills evident from their speech
 - traits: Personality traits observable from how they communicate
@@ -65,13 +91,11 @@ Return valid JSON:
 TRANSCRIPT:
 {text}"""
 
-    _check_client()
-    response = await client.chat.completions.create(
-        model=MODEL,
-        messages=[{"role": "user", "content": prompt}],
+    content = await _llm_call(
+        [{"role": "user", "content": prompt}],
         response_format={"type": "json_object"},
     )
-    return json.loads(response.choices[0].message.content)
+    return json.loads(content)
 
 
 async def extract_person_from_bio(name: str, bio_text: str) -> dict:
@@ -93,13 +117,11 @@ Return valid JSON:
 Be SPECIFIC. Instead of "technology", say "distributed systems" or "machine learning for healthcare".
 Instead of "leadership", say "building cross-functional engineering teams"."""
 
-    _check_client()
-    response = await client.chat.completions.create(
-        model=MODEL,
-        messages=[{"role": "user", "content": prompt}],
+    content = await _llm_call(
+        [{"role": "user", "content": prompt}],
         response_format={"type": "json_object"},
     )
-    return json.loads(response.choices[0].message.content)
+    return json.loads(content)
 
 
 async def generate_recommendations(
@@ -144,13 +166,11 @@ Return valid JSON:
   "overall_reasoning": "Brief explanation of recommendation strategy"
 }}"""
 
-    _check_client()
-    response = await client.chat.completions.create(
-        model=MODEL,
-        messages=[{"role": "user", "content": prompt}],
+    content = await _llm_call(
+        [{"role": "user", "content": prompt}],
         response_format={"type": "json_object"},
     )
-    return json.loads(response.choices[0].message.content)
+    return json.loads(content)
 
 
 async def chat_with_agent(
@@ -200,13 +220,11 @@ Return valid JSON:
   "graph_highlights": ["node_id_1", "node_id_2"]
 }}"""
 
-    _check_client()
-    response = await client.chat.completions.create(
-        model=MODEL,
-        messages=[{"role": "user", "content": prompt}],
+    content = await _llm_call(
+        [{"role": "user", "content": prompt}],
         response_format={"type": "json_object"},
     )
-    return json.loads(response.choices[0].message.content)
+    return json.loads(content)
 
 
 async def compute_pairwise_edge(person1_context: str, person2_context: str) -> dict:
@@ -239,13 +257,11 @@ Return valid JSON:
 
 If there is no meaningful connection beyond trivial overlap, set has_meaningful_connection to false and strength below 0.2."""
 
-    _check_client()
-    response = await client.chat.completions.create(
-        model=MODEL,
-        messages=[{"role": "user", "content": prompt}],
+    content = await _llm_call(
+        [{"role": "user", "content": prompt}],
         response_format={"type": "json_object"},
     )
-    return json.loads(response.choices[0].message.content)
+    return json.loads(content)
 
 
 async def compute_batch_edges(persons_contexts: list[tuple[str, str, str, str]]) -> list[dict]:
@@ -324,10 +340,8 @@ Return valid JSON:
   ]
 }}"""
 
-    _check_client()
-    response = await client.chat.completions.create(
-        model=MODEL,
-        messages=[{"role": "user", "content": prompt}],
+    content = await _llm_call(
+        [{"role": "user", "content": prompt}],
         response_format={"type": "json_object"},
     )
-    return json.loads(response.choices[0].message.content)
+    return json.loads(content)
