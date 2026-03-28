@@ -229,12 +229,12 @@ export default function ForceGraph({
   useEffect(() => {
     if (fgRef.current) {
       const fg = fgRef.current;
-      // Low repulsion force for tighter, more stable layout
-      fg.d3Force("charge")?.strength(-30).distanceMax(250);
-      // Shorter link distance for compactness
-      fg.d3Force("link")?.distance(60);
-      // Center gravity to keep nodes in view
-      fg.d3Force("center")?.strength(0.05);
+      // Very low repulsion — nodes stay close and stable
+      fg.d3Force("charge")?.strength(-10).distanceMax(150);
+      // Short link distance for compact layout
+      fg.d3Force("link")?.distance(40);
+      // Stronger center gravity to prevent nodes escaping
+      fg.d3Force("center")?.strength(0.15);
     }
   }, [nodes.length]);
 
@@ -254,8 +254,8 @@ export default function ForceGraph({
       cooldownTicks={200}
       nodeRelSize={7}
       linkDirectionalParticles={0}
-      d3AlphaDecay={0.03}
-      d3VelocityDecay={0.5}
+      d3AlphaDecay={0.05}
+      d3VelocityDecay={0.7}
       d3AlphaMin={0.001}
       enableNodeDrag={true}
       warmupTicks={50}
