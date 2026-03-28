@@ -5,9 +5,9 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 echo "Loading 20 sample participants..."
 
-curl -s -X POST http://localhost:8000/api/reset > /dev/null 2>&1
+curl -s -X POST http://localhost:8001/api/reset > /dev/null 2>&1
 
-RESULT=$(curl -s -X POST http://localhost:8000/api/ingest/batch \
+RESULT=$(curl -s -X POST http://localhost:8001/api/ingest/batch \
   -H "Content-Type: application/json" \
   -d @"$SCRIPT_DIR/data/sample_participants.json")
 
