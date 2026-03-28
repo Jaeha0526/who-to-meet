@@ -1,0 +1,164 @@
+{
+  "participants": [
+    {
+      "name": "Jaeha Lee",
+      "bio": "Building AI-powered tools for human connection. Background in full-stack engineering with Python and React. Interested in knowledge graphs, LLM agents, and making conferences more meaningful. Currently working on Who-to-Meet at Ralphthon hackathon. Believes in transparent AI that explains its reasoning.",
+      "interests": ["knowledge graphs", "LLM agents", "developer tools", "human-AI interaction", "network science"],
+      "skills": ["Python", "FastAPI", "React", "Next.js", "knowledge graph design", "prompt engineering"],
+      "traits": ["systems thinker", "collaborative", "detail-oriented"],
+      "goals": ["build meaningful AI tools", "meet potential co-founders", "explore graph-based applications"]
+    },
+    {
+      "name": "Soyeon Kim",
+      "bio": "Product designer turned AI researcher. Spent 5 years at Samsung working on UX for mobile apps, now exploring how LLMs can generate personalized user interfaces. Passionate about accessible design and Korean typography. Runs a small design community in Seoul.",
+      "interests": ["AI-generated UI", "accessible design", "Korean typography", "design systems", "user research"],
+      "skills": ["Figma", "UX research", "design systems", "prototyping", "React components"],
+      "traits": ["empathetic", "creative", "community-builder"],
+      "goals": ["launch an AI design tool startup", "find technical co-founder", "connect with AI researchers"]
+    },
+    {
+      "name": "Marcus Chen",
+      "bio": "Serial entrepreneur, 3rd startup. Previously built a fintech analytics platform (acquired). Now exploring AI agents for enterprise workflow automation. Strong believer in small teams shipping fast. Stanford CS, lived in SF for 10 years, recently moved to Seoul for the tech scene.",
+      "interests": ["enterprise AI", "workflow automation", "startup scaling", "venture capital", "Korean tech ecosystem"],
+      "skills": ["business strategy", "fundraising", "Go", "distributed systems", "team building"],
+      "traits": ["decisive", "high-energy", "mentoring"],
+      "goals": ["find AI agent co-builder", "invest in early-stage startups", "build Seoul tech network"]
+    },
+    {
+      "name": "Yuna Park",
+      "bio": "ML engineer at Naver, specializing in NLP for Korean language. Built the entity extraction pipeline for Naver's search. Interested in multilingual LLMs and how they handle Korean-English code-switching. Weekend project: building a Korean podcast transcription tool.",
+      "interests": ["Korean NLP", "multilingual LLMs", "entity extraction", "speech recognition", "podcast technology"],
+      "skills": ["PyTorch", "transformers", "Korean NLP", "MLOps", "data pipeline architecture"],
+      "traits": ["methodical", "curious", "deep technical focus"],
+      "goals": ["improve Korean LLM quality", "start NLP consulting", "publish research on code-switching"]
+    },
+    {
+      "name": "David Okonkwo",
+      "bio": "DevRel at a YC startup building open-source observability tools. Previously a backend engineer at Stripe. Loves building developer communities and creating technical content. Runs a popular YouTube channel on distributed systems. Interested in how AI changes developer workflows.",
+      "interests": ["developer experience", "observability", "open-source", "content creation", "distributed systems"],
+      "skills": ["Go", "Kubernetes", "technical writing", "public speaking", "community building"],
+      "traits": ["charismatic", "generous with knowledge", "bridge-builder"],
+      "goals": ["grow developer community in Asia", "create AI-powered DevRel tools", "find collaborators for open-source project"]
+    },
+    {
+      "name": "Minji Cho",
+      "bio": "Data scientist working on recommendation systems at Kakao. Background in graph neural networks and collaborative filtering. Fascinated by how social networks form at events. Side project: building a real-time networking app that suggests who to talk to at conferences based on mutual interests.",
+      "interests": ["recommendation systems", "graph neural networks", "social network analysis", "real-time systems", "event technology"],
+      "skills": ["Python", "GNN", "collaborative filtering", "Neo4j", "real-time data processing"],
+      "traits": ["analytical", "innovative", "socially observant"],
+      "goals": ["launch networking app", "find designer co-founder", "research conference networking patterns"]
+    },
+    {
+      "name": "Alex Rivera",
+      "bio": "Indie game developer and creative coder. Makes generative art with code and builds experimental games that explore social dynamics. Published 3 indie games on Steam. Currently prototyping a game where AI NPCs form their own social networks. Uses Unity and p5.js.",
+      "interests": ["generative art", "indie games", "creative coding", "AI NPCs", "social simulation"],
+      "skills": ["Unity", "C#", "p5.js", "generative algorithms", "game design"],
+      "traits": ["playful", "experimental", "visual thinker"],
+      "goals": ["build AI social simulation game", "find narrative designer collaborator", "exhibit generative art"]
+    },
+    {
+      "name": "Jihoon Kang",
+      "bio": "Blockchain engineer exploring the intersection of decentralized identity and AI. Previously at Klaytn foundation. Now building a protocol for verifiable AI agent interactions. Believes AI agents need provable identity and reputation systems. Avid rock climber.",
+      "interests": ["decentralized identity", "AI agent protocols", "blockchain", "verifiable computation", "rock climbing"],
+      "skills": ["Solidity", "Rust", "cryptography", "protocol design", "smart contracts"],
+      "traits": ["principled", "long-term thinker", "adventurous"],
+      "goals": ["build AI identity protocol", "find AI researchers for collaboration", "climb in Patagonia"]
+    },
+    {
+      "name": "Sarah Mitchell",
+      "bio": "Cognitive scientist turned AI ethicist. Researching how people form trust with AI systems at KAIST. Published papers on AI transparency and explainable recommendations. Believes every AI decision shown to users must be accompanied by clear reasoning. Hosts a podcast on human-AI trust.",
+      "interests": ["AI ethics", "explainable AI", "human-AI trust", "cognitive science", "podcast hosting"],
+      "skills": ["research methodology", "academic writing", "experiment design", "Python", "qualitative analysis"],
+      "traits": ["thoughtful", "principled", "articulate"],
+      "goals": ["influence AI transparency standards", "collaborate with AI builders on ethics", "grow podcast audience"]
+    },
+    {
+      "name": "Taemin Lee",
+      "bio": "Full-stack developer and hackathon enthusiast. Won 5 hackathons in the past year. Specializes in rapid prototyping with Next.js and Supabase. Currently interested in building tools that help people connect meaningfully at tech events. Also teaches coding workshops for beginners.",
+      "interests": ["rapid prototyping", "hackathons", "developer tools", "tech education", "meaningful connections"],
+      "skills": ["Next.js", "Supabase", "TypeScript", "rapid prototyping", "teaching"],
+      "traits": ["energetic", "helpful", "fast learner"],
+      "goals": ["win Ralphthon", "build a networking tool startup", "mentor junior developers"]
+    },
+    {
+      "name": "Hana Yoshida",
+      "bio": "UX researcher specializing in conversational AI interfaces. Worked at LINE on chatbot design. Now freelancing and researching how chat-based interfaces can feel more natural and less transactional. Fluent in Japanese, Korean, and English. Passionate about cross-cultural communication patterns.",
+      "interests": ["conversational AI", "chatbot UX", "cross-cultural communication", "multilingual interfaces", "user psychology"],
+      "skills": ["UX research", "conversation design", "usability testing", "Japanese", "Korean"],
+      "traits": ["observant", "cross-cultural perspective", "patient"],
+      "goals": ["design the ideal AI chat interface", "find AI startup to join", "research cross-cultural AI interactions"]
+    },
+    {
+      "name": "Ryan Park",
+      "bio": "Cloud architect at AWS Korea. Helps startups design scalable infrastructure. Deep knowledge of serverless patterns and event-driven architecture. Interested in how AI workloads change infrastructure needs. Runs the Seoul Cloud Native meetup. Weekend barista.",
+      "interests": ["cloud architecture", "serverless", "event-driven systems", "AI infrastructure", "specialty coffee"],
+      "skills": ["AWS", "Terraform", "serverless architecture", "system design", "DevOps"],
+      "traits": ["systematic", "reliable", "community-minded"],
+      "goals": ["help AI startups scale", "launch cloud consulting practice", "open a specialty coffee shop someday"]
+    },
+    {
+      "name": "Eunji Bae",
+      "bio": "Computational linguist building Korean language tools. Created an open-source Korean morphological analyzer that's used by 500+ developers. Interested in how LLMs handle agglutinative languages differently. Currently researching prompt engineering techniques specific to Korean.",
+      "interests": ["computational linguistics", "Korean language technology", "open-source", "prompt engineering for Korean", "agglutinative languages"],
+      "skills": ["NLP", "Python", "linguistic analysis", "open-source maintenance", "Korean morphology"],
+      "traits": ["meticulous", "open-source advocate", "linguistically minded"],
+      "goals": ["improve Korean AI tools", "build Korean prompt engineering guide", "collaborate with NLP researchers"]
+    },
+    {
+      "name": "Chris Nakamura",
+      "bio": "Music technologist and creative AI researcher. Building tools that help musicians collaborate with AI for composition and production. Background in audio engineering and machine learning. Released an AI-assisted album. Interested in the intersection of creativity and technology.",
+      "interests": ["music technology", "AI composition", "audio engineering", "creative AI", "electronic music production"],
+      "skills": ["audio ML", "Python", "Max/MSP", "music production", "signal processing"],
+      "traits": ["creative", "interdisciplinary", "passionate"],
+      "goals": ["launch AI music collaboration platform", "find designers for music tool", "perform with AI at events"]
+    },
+    {
+      "name": "Jisoo Han",
+      "bio": "Venture partner at a Seoul-based fund focused on AI and deep tech. Previously founded and exited a B2B SaaS company. Evaluates 200+ startups per year. Interested in AI agents, developer tools, and Korean language AI. Believes the next wave of great companies will be built in Asia.",
+      "interests": ["venture capital", "AI startups", "developer tools market", "Korean AI ecosystem", "deep tech investing"],
+      "skills": ["startup evaluation", "fundraising", "board governance", "market analysis", "mentoring founders"],
+      "traits": ["strategic", "well-connected", "pattern-matching"],
+      "goals": ["find next great AI startup to back", "build AI fund thesis", "connect founders with each other"]
+    },
+    {
+      "name": "Luna Kim",
+      "bio": "Neuroscience PhD student at SNU researching attention mechanisms in the brain and how they relate to transformer architectures. Fascinated by biological vs artificial intelligence. Builds brain-computer interface prototypes as a hobby. Also a competitive StarCraft player.",
+      "interests": ["neuroscience", "attention mechanisms", "brain-computer interfaces", "biological AI", "competitive gaming"],
+      "skills": ["neuroscience research", "Python", "EEG analysis", "transformer architectures", "scientific writing"],
+      "traits": ["intellectually voracious", "competitive", "interdisciplinary"],
+      "goals": ["bridge neuroscience and AI", "build practical BCI", "publish on attention mechanism parallels"]
+    },
+    {
+      "name": "Daniel Kwon",
+      "bio": "Product manager at Toss (Korean fintech unicorn). Shipped payment features used by millions. Now interested in how AI can personalize financial products. Strong believer in user-centric design and data-driven decisions. Runs marathons and tracks everything with data.",
+      "interests": ["fintech", "AI personalization", "product management", "quantified self", "marathon running"],
+      "skills": ["product strategy", "data analysis", "A/B testing", "user story mapping", "SQL"],
+      "traits": ["data-driven", "disciplined", "user-focused"],
+      "goals": ["build AI-powered financial advisor", "transition to AI product role", "run Boston Marathon"]
+    },
+    {
+      "name": "Mina Jeong",
+      "bio": "Open-source maintainer and Rust evangelist. Core contributor to a popular async runtime. Passionate about systems programming and performance optimization. Currently building a high-performance vector database in Rust. Runs Rust Seoul meetup. Cat person.",
+      "interests": ["Rust", "systems programming", "vector databases", "performance optimization", "open-source community"],
+      "skills": ["Rust", "C++", "systems architecture", "performance profiling", "open-source governance"],
+      "traits": ["precise", "community-driven", "performance-obsessed"],
+      "goals": ["ship vector database", "grow Rust community in Korea", "find users and contributors for OSS project"]
+    },
+    {
+      "name": "Tommy Zhao",
+      "bio": "AI art director and former graphic designer. Creates AI-generated visual campaigns for major brands. Pioneering the use of diffusion models in commercial design workflows. Teaching a course on AI art direction at a Seoul design school. Interested in the future of creative professions.",
+      "interests": ["AI art direction", "diffusion models", "commercial design", "creative AI education", "future of creative work"],
+      "skills": ["Stable Diffusion", "Midjourney", "art direction", "brand design", "design education"],
+      "traits": ["visionary", "aesthetically driven", "educator"],
+      "goals": ["define AI art direction as a discipline", "build AI design agency", "find tech co-founder for design tool"]
+    },
+    {
+      "name": "Hyejin Ryu",
+      "bio": "Healthcare AI researcher building diagnostic tools with medical imaging. Works at a university hospital developing AI that detects early-stage cancers. Passionate about making AI in healthcare trustworthy and explainable. Volunteers to teach AI literacy at community centers.",
+      "interests": ["medical AI", "diagnostic imaging", "explainable AI in healthcare", "AI literacy", "community teaching"],
+      "skills": ["medical imaging ML", "PyTorch", "clinical research", "data privacy", "science communication"],
+      "traits": ["compassionate", "rigorous", "mission-driven"],
+      "goals": ["deploy trustworthy medical AI", "improve AI explainability in clinical settings", "teach AI to underserved communities"]
+    }
+  ]
+}

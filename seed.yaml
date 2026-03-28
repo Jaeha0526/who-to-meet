@@ -15,7 +15,7 @@ constraints:
 - Graph storage must be NetworkX in-memory + SQLite for persistence — no Neo4j or
   Docker
 - Frontend must be Next.js + react-force-graph-2d for 2D force-directed visualization
-- LLM must use OpenAI API (GPT-4o) for chat and transcript-to-graph extraction — API key provided via .env file
+- LLM must use OpenAI API (o3 — most intelligent model available) for chat and transcript-to-graph extraction — API key provided via .env file, we have credits so use the best model
 - No live web scraping or LinkedIn API calls — ingestion via batch CSV/JSON import
   or manual text paste only
 - Scoped to 20 rich-data participants rather than 100 shallow ones
