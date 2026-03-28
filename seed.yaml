@@ -1,0 +1,212 @@
+goal: Build a localhost "who-to-meet" web app for the Ralphthon hackathon that ingests
+  participant data (conversation transcripts, LinkedIn profiles/bios) into an in-memory
+  knowledge graph, visualizes it as a 2D force-directed graph, and provides an LLM-powered
+  chat agent that recommends who to meet with transparent, grounded reasoning based
+  on real shared interests and complementary skills.
+task_type: code
+brownfield_context:
+  project_type: greenfield
+  context_references: []
+  existing_patterns: []
+  existing_dependencies: []
+constraints:
+- 4-hour total build timeline (3 hours build + 1 hour data ingestion and demo prep)
+- Backend must be FastAPI (Python) with async
+- Graph storage must be NetworkX in-memory + SQLite for persistence — no Neo4j or
+  Docker
+- Frontend must be Next.js + react-force-graph-2d for 2D force-directed visualization
+- LLM must use OpenAI API (GPT-4o) for chat and transcript-to-graph extraction — API key provided via .env file
+- No live web scraping or LinkedIn API calls — ingestion via batch CSV/JSON import
+  or manual text paste only
+- Scoped to 20 rich-data participants rather than 100 shallow ones
+- Dark mode minimal aesthetic — no busy dashboards
+- 2D graph only, no 3D
+- Transparency is non-negotiable — every recommendation must show visible reasoning
+  and connections, not just a score
+- Localhost admin-view demo app, not production deployment
+- Conversation transcripts are text files in the who-to-meet folder, can be Korean
+  or English, use generic labels like "participant 1, 2, 3" — names should be extracted
+  by LLM from conversation or manually mapped
+acceptance_criteria:
+- Knowledge graph correctly ingests conversation transcripts and extracts structured
+  person entities with specific interests, skills, and traits
+- Knowledge graph correctly ingests pre-collected CSV/JSON bios and LinkedIn profile
+  text via batch import
+- Manual paste ingestion works in real time during demo for ad-hoc participant addition
+- Chat agent answers "who should I meet?" with recommendations grounded in specific
+  shared interests or complementary skills, not vague statements like "you both like
+  technology"
+- Every recommendation displays transparent reasoning showing WHY with visible connections
+  to source data
+- Graph visualization renders cleanly as 2D force-directed layout with person nodes
+  and interaction/recommendation edges
+- Clicking a node or edge opens a detail window showing entity information
+- 'Three tabs function correctly: (1) Graph + LLM chat sidebar, (2) Personal knowledge
+  entity dashboard, (3) Fun matching categories'
+- Chat sidebar slides in while graph remains primary focus
+- Person selector allows choosing a person and viewing their knowledge and personalized
+  agent chat
+- 'Toggle switch works: ON enables agent to update knowledge on selected person, OFF
+  provides comfortable conversation mode'
+- Fun tab displays best matches in diverse categories (startup co-founder, potential
+  friends, creative pairings)
+- Entity dashboard shows simple cards/list with tags for topics and interests in sparse
+  clear layout
+- System handles 20 participants with rich data without performance issues
+ontology_schema:
+  name: SocialEventKnowledgeGraph
+  description: A knowledge graph representing participants at a social event (hackathon/conference),
+    their attributes, interests, skills, personality traits, conversation history,
+    and the relationships and recommended connections between them, plus venue/event
+    context.
+  fields:
+  - name: person_id
+    type: string
+    description: Unique identifier for each participant
+    required: true
+  - name: name
+    type: string
+    description: Full name of the participant
+    required: true
+  - name: bio
+    type: string
+    description: Raw ingested bio text from LinkedIn or manual paste
+    required: true
+  - name: interests
+    type: array
+    description: Specific personal and professional interests extracted by LLM
+    required: true
+  - name: skills
+    type: array
+    description: Technical and non-technical skills identified from source data
+    required: true
+  - name: traits
+    type: array
+    description: Personality traits and values inferred from conversations and bios
+    required: true
+  - name: goals
+    type: array
+    description: What the person is looking for (co-founder, friends, learning, etc.)
+    required: true
+  - name: source_type
+    type: string
+    description: How this person's data was ingested (batch_csv, manual_paste, transcript)
+    required: true
+  - name: source_raw
+    type: string
+    description: Original raw text from which entities were extracted
+    required: true
+  - name: conversations
+    type: array
+    description: List of conversation transcript references this person participated
+      in
+    required: true
+  - name: conversation_id
+    type: string
+    description: Unique identifier for a conversation transcript
+    required: true
+  - name: conversation_participants
+    type: array
+    description: Person IDs of participants in a conversation
+    required: true
+  - name: conversation_summary
+    type: string
+    description: LLM-generated summary of conversation content
+    required: true
+  - name: conversation_topics
+    type: array
+    description: Key topics discussed in the conversation
+    required: true
+  - name: edge_type
+    type: string
+    description: Type of relationship between two nodes (past_interaction, recommended_match,
+      shared_interest)
+    required: true
+  - name: edge_reasoning
+    type: string
+    description: Transparent explanation of why this edge exists with specific attributed
+      evidence
+    required: true
+  - name: edge_strength
+    type: number
+    description: Strength score of the connection between two people (0.0-1.0)
+    required: true
+  - name: match_category
+    type: string
+    description: Fun matching category label (e.g. startup_cofounders, potential_friends,
+      creative_pair)
+    required: true
+  - name: match_explanation
+    type: string
+    description: Detailed reasoning for why two people match in a given category
+    required: true
+  - name: event_context
+    type: object
+    description: Overall venue and event metadata (event name, theme, sessions, schedule)
+    required: true
+  - name: session_id
+    type: string
+    description: Unique identifier for an event session
+    required: true
+  - name: session_description
+    type: string
+    description: Description and topic of a concurrent session for agent to recommend
+      attendance
+    required: true
+evaluation_principles:
+- name: recommendation_depth
+  description: Recommendations must reference specific, attributable properties from
+    ingested data — not vague generalities like 'you both like technology'
+  weight: 0.3
+- name: reasoning_transparency
+  description: Every recommendation and match must display visible WHY reasoning grounded
+    in source data and knowledge graph connections
+  weight: 0.25
+- name: data_ingestion_accuracy
+  description: LLM extraction from transcripts and bios must produce structured entities
+    that faithfully represent the source material
+  weight: 0.2
+- name: ui_clarity
+  description: Interface must be minimal, dark mode, calm — graph as primary focus,
+    chat as sidebar, entity cards sparse and clear
+  weight: 0.1
+- name: graph_correctness
+  description: Knowledge graph nodes and edges must accurately reflect real relationships
+    and extracted data, not hallucinated connections
+  weight: 0.1
+- name: demo_reliability
+  description: All features must work reliably during a live demo with no flaky external
+    dependencies
+  weight: 0.05
+exit_conditions:
+- name: core_ingestion_complete
+  description: Batch CSV/JSON and manual paste ingestion pipelines are functional
+    and produce correct graph entities
+  criteria: All 20 target participants can be ingested and appear as nodes with rich
+    extracted attributes
+- name: graph_visualization_functional
+  description: 2D force-directed graph renders with person nodes, relationship edges,
+    and click-to-inspect detail windows
+  criteria: Graph loads without errors, nodes are clickable, edges display reasoning
+    on click
+- name: chat_agent_operational
+  description: Chat sidebar agent answers who-to-meet queries with transparent reasoning
+    grounded in graph data
+  criteria: Agent returns specific attributed recommendations for at least 3 test
+    queries without vague or hallucinated reasoning
+- name: three_tabs_complete
+  description: All three tabs (Graph+Chat, Personal Dashboard, Fun Matches) render
+    and function
+  criteria: Each tab displays correct content and navigation between tabs works
+- name: demo_ready
+  description: App runs on localhost, populated with real Ralphthon participant data,
+    ready for judge evaluation
+  criteria: Full walkthrough possible — ingest a person live, view graph, ask agent,
+    show fun matches — all without errors
+metadata:
+  seed_id: seed_416955030a65
+  version: 1.0.0
+  created_at: '2026-03-28T19:14:01.590516Z'
+  ambiguity_score: 0.126
+  interview_id: interview_20260328_185659
+  parent_seed_id: null
