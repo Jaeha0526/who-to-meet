@@ -225,18 +225,30 @@ export default function ForceGraph({
     [hoveredNode, hoveredLink]
   );
 
-  // Apply low repulsion force and boundary constraints for stable clicking
+  // Apply forces and hard boundary clamping
   useEffect(() => {
     if (fgRef.current) {
       const fg = fgRef.current;
-      // Minimal repulsion — just enough to not overlap
-      fg.d3Force("charge")?.strength(-3).distanceMax(80);
-      // Very short links to keep nodes tight
-      fg.d3Force("link")?.distance(25).strength(2);
-      // Strong center gravity — nodes cannot escape
-      fg.d3Force("center")?.strength(0.4);
+      // Minimal repulsion
+      fg.d3Force("charge")?.strength(-5).distanceMax(100);
+      // Short links
+      fg.d3Force("link")?.distance(30).strength(1.5);
+      // Center gravity
+      fg.d3Force("center")?.strength(0.3);
+
+      // Hard boundary: clamp nodes within visible area on every tick
+      const padX = dimensions.w * 0.4;
+      const padY = dimensions.h * 0.4;
+      fg.d3Force("boundary", () => {
+        fg.graphData().nodes.forEach((node: any) => {
+          if (node.x < -padX) { node.x = -padX; node.vx = 0; }
+          if (node.x > padX) { node.x = padX; node.vx = 0; }
+          if (node.y < -padY) { node.y = -padY; node.vy = 0; }
+          if (node.y > padY) { node.y = padY; node.vy = 0; }
+        });
+      });
     }
-  }, [nodes.length]);
+  }, [nodes.length, dimensions.w, dimensions.h]);
 
   return (
     <ForceGraph2D
@@ -251,14 +263,15 @@ export default function ForceGraph({
       onNodeHover={(node: any) => setHoveredNode(node?.id || null)}
       onLinkHover={(link: any) => setHoveredLink(link || null)}
       backgroundColor="#0a0a0f"
-      cooldownTicks={200}
+      cooldownTicks={100}
+      cooldownTime={3000}
       nodeRelSize={7}
       linkDirectionalParticles={0}
-      d3AlphaDecay={0.08}
-      d3VelocityDecay={0.85}
-      d3AlphaMin={0.001}
+      d3AlphaDecay={0.1}
+      d3VelocityDecay={0.9}
+      d3AlphaMin={0.01}
       enableNodeDrag={true}
-      warmupTicks={50}
+      warmupTicks={100}
       minZoom={0.3}
       maxZoom={8}
     />
