@@ -233,8 +233,8 @@ export default function ForceGraph({
       fg.d3Force("charge")?.strength(-5).distanceMax(100);
       // Short links
       fg.d3Force("link")?.distance(30).strength(1.5);
-      // Center gravity
-      fg.d3Force("center")?.strength(0.3);
+      // Strong center gravity — pulls all clusters together
+      fg.d3Force("center")?.strength(0.5);
 
       // Hard boundary: clamp nodes within visible area on every tick
       const padX = dimensions.w * 0.4;
