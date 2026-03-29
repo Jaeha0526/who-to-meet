@@ -236,15 +236,16 @@ export default function ForceGraph({
       // Strong center gravity — pulls all clusters together
       fg.d3Force("center")?.strength(0.5);
 
-      // Hard boundary: clamp nodes within visible area on every tick
+      // Soft bounding walls — nodes ease away from edges naturally
       const padX = dimensions.w * 0.4;
       const padY = dimensions.h * 0.4;
-      fg.d3Force("boundary", () => {
+      const wallStrength = 0.5;
+      fg.d3Force("boundary", (alpha: number) => {
         fg.graphData().nodes.forEach((node: any) => {
-          if (node.x < -padX) { node.x = -padX; node.vx = 0; }
-          if (node.x > padX) { node.x = padX; node.vx = 0; }
-          if (node.y < -padY) { node.y = -padY; node.vy = 0; }
-          if (node.y > padY) { node.y = padY; node.vy = 0; }
+          if (node.x < -padX) node.vx += (-padX - node.x) * alpha * wallStrength;
+          if (node.x > padX)  node.vx -= (node.x - padX) * alpha * wallStrength;
+          if (node.y < -padY) node.vy += (-padY - node.y) * alpha * wallStrength;
+          if (node.y > padY)  node.vy -= (node.y - padY) * alpha * wallStrength;
         });
       });
     }
