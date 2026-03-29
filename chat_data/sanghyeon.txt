@@ -2,6 +2,8 @@ New note
 2026.03.29 Sun AM 6:47 ・ 13Minutes 44seconds
 이재하
 
+This is a conversation of Sanghyeon and Jaeha. Jaeha is working on chip design.
+
 
 Attendees 1 00:00
 근데 이게 막 인터뷰 이런 게 아니고요. 그냥 대화를 하면은 그냥 AI가 알아서 얻을 수 있는 정보 있으면 없고 아니면 그냥
